@@ -30,6 +30,9 @@
 					<a href="<?php echo esc_url( home_url( '/contato' ) ); ?>" class="btn btn-white"><?php esc_html_e( 'Fale Conosco', 'mage' ); ?></a>
 				</div>
 			</div>
+			<div class="hero-visual">
+				<?php get_template_part( 'template-parts/mage-emblem' ); ?>
+			</div>
 		</div>
 	</section>
 

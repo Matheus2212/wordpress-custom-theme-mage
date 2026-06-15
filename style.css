@@ -116,13 +116,72 @@ button{cursor:pointer;font-family:var(--font-base)}
 /* ── Hero ───────────────────────────────────────────────────────────────────── */
 .hero{min-height:100vh;display:flex;align-items:center;background:var(--color-secondary);color:var(--color-white);padding-top:var(--header-h);position:relative;overflow:hidden}
 .hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 80% 80% at 70% 50%, rgba(129,10,210,.25) 0%, transparent 70%);pointer-events:none}
-.hero-content{position:relative;z-index:1;max-width:680px}
+.hero .container{display:flex;align-items:center;gap:48px;justify-content:space-between}
+.hero-content{position:relative;z-index:1;max-width:680px;flex:1 1 480px}
+.hero-visual{position:relative;z-index:1;flex:0 1 460px;display:flex;justify-content:center}
 .hero-eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:.85rem;font-weight:600;color:var(--color-primary);letter-spacing:1px;text-transform:uppercase;margin-bottom:20px}
 .hero-eyebrow::before{content:'';display:block;width:32px;height:2px;background:var(--color-primary)}
 .hero h1{font-size:clamp(2.4rem,5vw,4rem);font-weight:800;line-height:1.1;color:var(--color-white);margin-bottom:24px}
 .hero h1 span{color:var(--color-primary)}
 .hero p{font-size:1.15rem;color:rgba(222,222,222,.8);margin-bottom:36px;max-width:540px}
 .hero-actions{display:flex;flex-wrap:wrap;gap:16px}
+
+/* ── Mage emblem (animated SVG aura around the static logo) ───────────────────── */
+.mage-emblem{position:relative;width:100%;max-width:420px;aspect-ratio:600/820;margin-inline:auto}
+.mage-aura{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+/* Centred on the aura's logo focus point (cx300/cy300 in a 600x820 viewBox) */
+.mage-mark{position:absolute;left:50%;top:36.6%;transform:translate(-50%,-50%);width:30%;display:flex;justify-content:center;filter:drop-shadow(0 0 18px rgba(185,108,255,.65))}
+.mage-mark img,.mage-mark-svg{width:100%;height:auto;display:block}
+
+/* SVG sub-element transform setup so origins resolve to each shape's own centre */
+.mage-aura .ring,.mage-aura .ripple,.mage-aura .spark,.mage-aura .aura-glow,.mage-aura .portal-core{transform-box:fill-box;transform-origin:center}
+
+/* Rings: counter-rotating halo */
+.ring-1{animation:mage-spin 36s linear infinite}
+.ring-2{animation:mage-spin 52s linear infinite reverse}
+.ring-3{animation:mage-spin 24s linear infinite}
+
+/* Aura breathing glow */
+.aura-glow{animation:mage-breathe 5s ease-in-out infinite}
+
+/* Central pillar shimmer */
+.pillar{transform-box:fill-box;transform-origin:top center;animation:mage-pillar 3.4s ease-in-out infinite}
+
+/* Rising beams */
+.beam{opacity:0}
+.beam-1{animation:mage-beam 2.8s ease-out infinite}
+.beam-2{animation:mage-beam 3.6s ease-out .4s infinite}
+.beam-3{animation:mage-beam 3.1s ease-out .9s infinite}
+.beam-4{animation:mage-beam 2.4s ease-out 1.3s infinite}
+.beam-5{animation:mage-beam 3.9s ease-out 1.7s infinite}
+
+/* Ground portal ripples */
+.ripple{opacity:0}
+.ripple-1{animation:mage-ripple 4s ease-out infinite}
+.ripple-2{animation:mage-ripple 4s ease-out .8s infinite}
+.ripple-3{animation:mage-ripple 4s ease-out 1.6s infinite}
+.ripple-4{animation:mage-ripple 4s ease-out 2.4s infinite}
+.portal-core{animation:mage-breathe 2.6s ease-in-out infinite}
+
+/* Sparkles twinkle */
+.spark{opacity:0}
+.spark-1{animation:mage-twinkle 3.2s ease-in-out infinite}
+.spark-2{animation:mage-twinkle 2.6s ease-in-out .6s infinite}
+.spark-3{animation:mage-twinkle 3.8s ease-in-out 1.1s infinite}
+.spark-4{animation:mage-twinkle 2.9s ease-in-out 1.5s infinite}
+.spark-5{animation:mage-twinkle 3.4s ease-in-out 2s infinite}
+
+@keyframes mage-spin{to{transform:rotate(360deg)}}
+@keyframes mage-breathe{0%,100%{opacity:.5;transform:scale(.96)}50%{opacity:1;transform:scale(1.04)}}
+@keyframes mage-pillar{0%,100%{opacity:.45;transform:scaleY(.92)}50%{opacity:1;transform:scaleY(1)}}
+@keyframes mage-beam{0%{opacity:0;transform:translateY(40px)}30%{opacity:1}100%{opacity:0;transform:translateY(-90px)}}
+@keyframes mage-ripple{0%{opacity:0;transform:scale(.2)}25%{opacity:.8}100%{opacity:0;transform:scale(1.25)}}
+@keyframes mage-twinkle{0%,100%{opacity:0;transform:scale(.4)}50%{opacity:1;transform:scale(1)}}
+
+@media(prefers-reduced-motion:reduce){
+  .mage-aura *{animation:none!important}
+  .beam,.ripple,.spark{opacity:.85}
+}
 
 /* ── Sections ───────────────────────────────────────────────────────────────── */
 .section-dark{background:var(--color-secondary);color:var(--color-white)}
@@ -245,7 +304,13 @@ button{cursor:pointer;font-family:var(--font-base)}
   .footer-grid{grid-template-columns:1fr}
   .footer-bottom{flex-direction:column;text-align:center}
   .hero{min-height:auto;padding:calc(var(--header-h) + 48px) 0 64px}
-  .hero-actions{flex-direction:column;align-items:flex-start}
+  .hero .container{flex-direction:column;text-align:center}
+  .hero-content{max-width:none}
+  .hero p{margin-inline:auto}
+  .hero-eyebrow{justify-content:center}
+  .hero-actions{align-items:center}
+  .hero-visual{order:-1;flex-basis:auto}
+  .mage-emblem{max-width:300px}
 }
 @media(max-width:480px){
   .posts-grid{grid-template-columns:1fr}
