@@ -78,28 +78,21 @@
 		<?php if ( has_custom_logo() ) : ?>
 			<?php the_custom_logo(); ?>
 		<?php else : ?>
-			<svg class="mage-mark-svg" viewBox="0 0 120 160" aria-hidden="true" focusable="false">
+			<svg class="mage-mark-svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
 				<defs>
 					<linearGradient id="mageMarkFill" x1="0" y1="0" x2="0" y2="1">
-						<stop offset="0%" stop-color="#c58bff" />
+						<stop offset="0%" stop-color="#9b30ff" />
 						<stop offset="100%" stop-color="#810AD2" />
 					</linearGradient>
 				</defs>
 				<g fill="url(#mageMarkFill)">
-					<?php /* hat with a curled tip */ ?>
-					<path d="M30 60 Q 36 20 54 8 Q 45 19 60 16 Q 72 30 90 60 Q 60 70 30 60 Z" />
+					<?php /* pointed hat with a folded-over tip, leaning right */ ?>
+					<path d="M190 22 L345 120 L342 236 L192 236 L220 132 L150 98 Z" />
 					<?php /* brim */ ?>
-					<ellipse cx="60" cy="61" rx="38" ry="8" />
-					<?php /* face */ ?>
-					<path d="M35 66 Q 35 95 49 108 L 71 108 Q 85 95 85 66 Q 60 75 35 66 Z" />
-					<?php /* beard */ ?>
-					<path d="M41 96 Q 45 142 60 153 Q 75 142 79 96 Q 60 106 41 96 Z" />
+					<ellipse cx="256" cy="262" rx="172" ry="30" />
 				</g>
-				<?php /* eyes (negative space) */ ?>
-				<ellipse cx="51" cy="80" rx="3.4" ry="4.6" fill="#15052b" />
-				<ellipse cx="69" cy="80" rx="3.4" ry="4.6" fill="#15052b" />
-				<?php /* hat-band star */ ?>
-				<path d="M64 47 l2.6 7.4 7.4 2.6 -7.4 2.6 -2.6 7.4 -2.6 -7.4 -7.4 -2.6 7.4 -2.6 z" fill="#ffffff" />
+				<?php /* hat-band sparkle */ ?>
+				<path d="M262 140 L270 174 L304 182 L270 190 L262 224 L254 190 L220 182 L254 174 Z" fill="#ffffff" />
 			</svg>
 		<?php endif; ?>
 	</div>

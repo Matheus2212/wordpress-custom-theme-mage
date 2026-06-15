@@ -130,7 +130,7 @@ button{cursor:pointer;font-family:var(--font-base)}
 .mage-emblem{position:relative;width:100%;max-width:420px;aspect-ratio:600/820;margin-inline:auto}
 .mage-aura{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 /* Centred on the aura's logo focus point (cx300/cy300 in a 600x820 viewBox) */
-.mage-mark{position:absolute;left:50%;top:36.6%;transform:translate(-50%,-50%);width:30%;display:flex;justify-content:center;filter:drop-shadow(0 0 18px rgba(185,108,255,.65))}
+.mage-mark{position:absolute;left:50%;top:36.6%;transform:translate(-50%,-50%);width:40%;display:flex;justify-content:center;filter:drop-shadow(0 0 18px rgba(185,108,255,.65))}
 .mage-mark img,.mage-mark-svg{width:100%;height:auto;display:block}
 
 /* SVG sub-element transform setup so origins resolve to each shape's own centre */
