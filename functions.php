@@ -105,34 +105,81 @@ add_filter( 'style_loader_tag', function( $tag, $handle ) {
 function mage_head_seo() {
 	global $post;
 	$site_name = get_bloginfo( 'name' );
-	$site_url  = home_url();
+	$site_url  = home_url( '/' );
+	$is_post   = is_singular( 'post' );
+	$image     = '';
 
 	if ( is_singular() ) {
 		$title       = get_the_title( $post );
-		$description = has_excerpt( $post ) ? get_the_excerpt( $post ) : wp_trim_words( get_the_content( null, false, $post ), 25 );
-		$image       = get_the_post_thumbnail_url( $post, 'large' );
+		$description = has_excerpt( $post ) ? get_the_excerpt( $post ) : wp_trim_words( wp_strip_all_tags( get_the_content( null, false, $post ) ), 30 );
+		$image       = get_the_post_thumbnail_url( $post, 'mage-hero' );
 		$url         = get_permalink( $post );
-	} else {
-		$title       = get_bloginfo( 'name' );
+	} elseif ( is_category() || is_tag() || is_tax() ) {
+		$term        = get_queried_object();
+		$title       = single_term_title( '', false );
+		$description = term_description() ? term_description() : sprintf( __( 'Conteúdos sobre %s.', 'mage' ), $title );
+		$url         = get_term_link( $term );
+	} elseif ( is_home() ) {
+		$blog_id     = (int) get_option( 'page_for_posts' );
+		$title       = $blog_id ? get_the_title( $blog_id ) : __( 'Blog', 'mage' );
 		$description = get_bloginfo( 'description' );
-		$image       = '';
+		$url         = $blog_id ? get_permalink( $blog_id ) : $site_url;
+	} else {
+		$title       = $site_name;
+		$description = get_bloginfo( 'description' );
 		$url         = $site_url;
 	}
 
-	$description = esc_attr( wp_strip_all_tags( $description ) );
+	if ( is_wp_error( $url ) ) {
+		$url = $site_url;
+	}
+
+	$description = esc_attr( wp_strip_all_tags( (string) $description ) );
+	$og_type     = $is_post ? 'article' : 'website';
 
 	echo '<meta name="description" content="' . $description . '">' . "\n";
-	echo '<meta property="og:type" content="website">' . "\n";
+
+	if ( is_search() || is_404() ) {
+		echo '<meta name="robots" content="noindex,follow">' . "\n";
+	}
+
+	// Canonical for non-singular views (core's rel_canonical handles singular).
+	if ( ! is_singular() && ! is_search() && ! is_404() && ! is_paged() ) {
+		echo '<link rel="canonical" href="' . esc_url( $url ) . '">' . "\n";
+	}
+
+	echo '<meta property="og:type" content="' . esc_attr( $og_type ) . '">' . "\n";
 	echo '<meta property="og:title" content="' . esc_attr( $title ) . '">' . "\n";
 	echo '<meta property="og:description" content="' . $description . '">' . "\n";
 	echo '<meta property="og:url" content="' . esc_url( $url ) . '">' . "\n";
 	echo '<meta property="og:site_name" content="' . esc_attr( $site_name ) . '">' . "\n";
+	echo '<meta property="og:locale" content="' . esc_attr( get_locale() ) . '">' . "\n";
 	if ( $image ) {
 		echo '<meta property="og:image" content="' . esc_url( $image ) . '">' . "\n";
 	}
+
+	if ( $is_post ) {
+		echo '<meta property="article:published_time" content="' . esc_attr( get_the_date( 'c', $post ) ) . '">' . "\n";
+		echo '<meta property="article:modified_time" content="' . esc_attr( get_the_modified_date( 'c', $post ) ) . '">' . "\n";
+		$author = get_the_author_meta( 'display_name', $post->post_author );
+		if ( $author ) {
+			echo '<meta property="article:author" content="' . esc_attr( $author ) . '">' . "\n";
+		}
+		$post_cats = get_the_category( $post->ID );
+		if ( $post_cats ) {
+			echo '<meta property="article:section" content="' . esc_attr( $post_cats[0]->name ) . '">' . "\n";
+		}
+		foreach ( (array) get_the_tags( $post->ID ) as $post_tag ) {
+			echo '<meta property="article:tag" content="' . esc_attr( $post_tag->name ) . '">' . "\n";
+		}
+	}
+
 	echo '<meta name="twitter:card" content="summary_large_image">' . "\n";
 	echo '<meta name="twitter:title" content="' . esc_attr( $title ) . '">' . "\n";
 	echo '<meta name="twitter:description" content="' . $description . '">' . "\n";
+	if ( $image ) {
+		echo '<meta name="twitter:image" content="' . esc_url( $image ) . '">' . "\n";
+	}
 
 	// Preconnect for performance
 	echo '<link rel="preconnect" href="https://fonts.googleapis.com">' . "\n";
@@ -152,23 +199,67 @@ function mage_structured_data() {
 	if ( is_front_page() || is_home() ) {
 		$schema = array(
 			'@context' => 'https://schema.org',
-			'@type'    => 'Organization',
-			'name'     => $site_name,
-			'url'      => $site_url,
-			'logo'     => $logo_url,
+			'@graph'   => array(
+				array(
+					'@type' => 'Organization',
+					'@id'   => $site_url . '#organization',
+					'name'  => $site_name,
+					'url'   => $site_url,
+					'logo'  => $logo_url,
+				),
+				array(
+					'@type'           => 'WebSite',
+					'@id'             => $site_url . '#website',
+					'url'             => $site_url,
+					'name'            => $site_name,
+					'description'     => get_bloginfo( 'description' ),
+					'publisher'       => array( '@id' => $site_url . '#organization' ),
+					'potentialAction' => array(
+						'@type'       => 'SearchAction',
+						'target'      => array(
+							'@type'       => 'EntryPoint',
+							'urlTemplate' => $site_url . '?s={search_term_string}',
+						),
+						'query-input' => 'required name=search_term_string',
+					),
+				),
+			),
 		);
 	} elseif ( is_singular( 'post' ) ) {
+		$post_cats = get_the_category( $post->ID );
+		$post_tags = get_the_tags( $post->ID );
+
 		$schema = array(
 			'@context'         => 'https://schema.org',
 			'@type'            => 'BlogPosting',
+			'mainEntityOfPage' => array( '@type' => 'WebPage', '@id' => get_permalink( $post ) ),
 			'headline'         => get_the_title( $post ),
 			'datePublished'    => get_the_date( 'c', $post ),
 			'dateModified'     => get_the_modified_date( 'c', $post ),
-			'author'           => array( '@type' => 'Person', 'name' => get_the_author_meta( 'display_name', $post->post_author ) ),
-			'publisher'        => array( '@type' => 'Organization', 'name' => $site_name, 'logo' => array( '@type' => 'ImageObject', 'url' => $logo_url ) ),
-			'description'      => wp_trim_words( get_the_excerpt( $post ), 25 ),
+			'author'           => array(
+				'@type' => 'Person',
+				'name'  => get_the_author_meta( 'display_name', $post->post_author ),
+				'url'   => get_author_posts_url( $post->post_author ),
+			),
+			'publisher'        => array(
+				'@type' => 'Organization',
+				'name'  => $site_name,
+				'logo'  => array( '@type' => 'ImageObject', 'url' => $logo_url ),
+			),
+			'description'      => wp_strip_all_tags( get_the_excerpt( $post ) ),
 			'url'              => get_permalink( $post ),
+			'wordCount'        => str_word_count( wp_strip_all_tags( get_the_content( null, false, $post ) ) ),
 		);
+
+		if ( has_post_thumbnail( $post ) ) {
+			$schema['image'] = get_the_post_thumbnail_url( $post, 'mage-hero' );
+		}
+		if ( $post_cats ) {
+			$schema['articleSection'] = $post_cats[0]->name;
+		}
+		if ( $post_tags ) {
+			$schema['keywords'] = implode( ', ', wp_list_pluck( $post_tags, 'name' ) );
+		}
 	} else {
 		return;
 	}
@@ -216,3 +307,4 @@ add_action( 'after_switch_theme', 'mage_flush_rewrite' );
 require get_template_directory() . '/inc/template-tags.php';
 require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/customizer.php';
+require get_template_directory() . '/inc/breadcrumbs.php';

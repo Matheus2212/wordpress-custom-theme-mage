@@ -3,18 +3,28 @@
 <?php if ( is_home() && ! is_front_page() ) : ?>
 	<section class="archive-header">
 		<div class="container">
+			<?php mage_breadcrumbs(); ?>
 			<span class="tag"><?php esc_html_e( 'Blog', 'mage' ); ?></span>
 			<h1><?php esc_html_e( 'Últimas Publicações', 'mage' ); ?></h1>
 			<p><?php esc_html_e( 'Dicas, novidades e conteúdo sobre tecnologia e marketing digital.', 'mage' ); ?></p>
 		</div>
 	</section>
 	<div class="container">
-		<div class="posts-grid">
-			<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-				<?php get_template_part( 'template-parts/card', 'post' ); ?>
-			<?php endwhile; endif; ?>
+		<div class="blog-wrap<?php echo is_active_sidebar( 'sidebar-blog' ) ? ' has-sidebar' : ''; ?>">
+			<main class="blog-main">
+				<?php if ( have_posts() ) : ?>
+					<div class="posts-grid posts-grid--flush">
+						<?php while ( have_posts() ) : the_post(); ?>
+							<?php get_template_part( 'template-parts/card', 'post' ); ?>
+						<?php endwhile; ?>
+					</div>
+					<?php the_posts_pagination( array( 'class' => 'pagination', 'mid_size' => 1 ) ); ?>
+				<?php else : ?>
+					<p class="no-results"><?php esc_html_e( 'Nenhum post encontrado.', 'mage' ); ?></p>
+				<?php endif; ?>
+			</main>
+			<?php get_sidebar(); ?>
 		</div>
-		<?php the_posts_pagination( array( 'class' => 'pagination' ) ); ?>
 	</div>
 
 <?php elseif ( is_front_page() ) : ?>
