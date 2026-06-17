@@ -73,25 +73,30 @@
 		</g>
 	</svg>
 
-	<?php /* ── The mage hat mark in the middle — static, never animated ───── */ ?>
-	<div class="mage-mark">
-		<svg class="mage-mark-svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
-			<defs>
-				<linearGradient id="mageHatFill" x1="0" y1="0" x2="1" y2="1">
-					<stop offset="0%" stop-color="#bd7bff" />
-					<stop offset="100%" stop-color="#8a23e0" />
-				</linearGradient>
-				<linearGradient id="mageBrimFill" x1="0" y1="0" x2="0" y2="1">
-					<stop offset="0%" stop-color="#7d22cf" />
-					<stop offset="100%" stop-color="#5a118f" />
-				</linearGradient>
-			</defs>
-			<?php /* brim */ ?>
-			<ellipse cx="256" cy="258" rx="176" ry="30" fill="url(#mageBrimFill)" />
-			<?php /* pointed hat with a folded-over tip */ ?>
-			<path d="M188 18 C 178 50 168 78 152 96 L 214 126 L 200 232 L 340 232 L 330 110 Z" fill="url(#mageHatFill)" />
-			<?php /* hat-band sparkle */ ?>
-			<path d="M256 136 L265 167 L296 176 L265 185 L256 216 L247 185 L216 176 L247 167 Z" fill="#ffffff" />
-		</svg>
+	<?php /* ── The mark in the middle — static, never animated ─────────────── */ ?>
+	<?php $mage_use_logo = ( 'logo' === get_theme_mod( 'mage_emblem_center', 'hat' ) && has_custom_logo() ); ?>
+	<div class="mage-mark<?php echo $mage_use_logo ? ' mage-mark--logo' : ''; ?>">
+		<?php if ( $mage_use_logo ) : ?>
+			<?php the_custom_logo(); ?>
+		<?php else : ?>
+			<svg class="mage-mark-svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+				<defs>
+					<linearGradient id="mageHatFill" x1="0" y1="0" x2="1" y2="1">
+						<stop offset="0%" stop-color="#bd7bff" />
+						<stop offset="100%" stop-color="#8a23e0" />
+					</linearGradient>
+					<linearGradient id="mageBrimFill" x1="0" y1="0" x2="0" y2="1">
+						<stop offset="0%" stop-color="#7d22cf" />
+						<stop offset="100%" stop-color="#5a118f" />
+					</linearGradient>
+				</defs>
+				<?php /* brim */ ?>
+				<ellipse cx="256" cy="258" rx="176" ry="30" fill="url(#mageBrimFill)" />
+				<?php /* pointed hat with a folded-over tip */ ?>
+				<path d="M188 18 C 178 50 168 78 152 96 L 214 126 L 200 232 L 340 232 L 330 110 Z" fill="url(#mageHatFill)" />
+				<?php /* hat-band sparkle */ ?>
+				<path d="M256 136 L265 167 L296 176 L265 185 L256 216 L247 185 L216 176 L247 167 Z" fill="#ffffff" />
+			</svg>
+		<?php endif; ?>
 	</div>
 </div>

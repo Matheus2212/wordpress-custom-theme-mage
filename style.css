@@ -132,6 +132,8 @@ button{cursor:pointer;font-family:var(--font-base)}
 .mage-aura{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 /* Centred on the aura's logo focus point (cx300/cy300 in a 600x820 viewBox) */
 .mage-mark{position:absolute;left:50%;top:36.6%;transform:translate(-50%,-50%);width:40%;display:flex;justify-content:center;filter:drop-shadow(0 0 18px rgba(185,108,255,.65))}
+.mage-mark--logo{width:66%}
+.mage-mark a{display:block;width:100%}
 .mage-mark img,.mage-mark-svg{width:100%;height:auto;display:block}
 
 /* SVG sub-element transform setup so origins resolve to each shape's own centre */

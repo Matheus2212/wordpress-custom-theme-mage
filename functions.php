@@ -215,3 +215,4 @@ add_action( 'after_switch_theme', 'mage_flush_rewrite' );
 
 require get_template_directory() . '/inc/template-tags.php';
 require get_template_directory() . '/inc/template-functions.php';
+require get_template_directory() . '/inc/customizer.php';
