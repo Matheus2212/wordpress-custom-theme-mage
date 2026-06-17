@@ -73,27 +73,25 @@
 		</g>
 	</svg>
 
-	<?php /* ── The mage logo in the middle — static, never animated ──────── */ ?>
+	<?php /* ── The mage hat mark in the middle — static, never animated ───── */ ?>
 	<div class="mage-mark">
-		<?php if ( has_custom_logo() ) : ?>
-			<?php the_custom_logo(); ?>
-		<?php else : ?>
-			<svg class="mage-mark-svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
-				<defs>
-					<linearGradient id="mageMarkFill" x1="0" y1="0" x2="0" y2="1">
-						<stop offset="0%" stop-color="#9b30ff" />
-						<stop offset="100%" stop-color="#810AD2" />
-					</linearGradient>
-				</defs>
-				<g fill="url(#mageMarkFill)">
-					<?php /* pointed hat with a folded-over tip, leaning right */ ?>
-					<path d="M190 22 L345 120 L342 236 L192 236 L220 132 L150 98 Z" />
-					<?php /* brim */ ?>
-					<ellipse cx="256" cy="262" rx="172" ry="30" />
-				</g>
-				<?php /* hat-band sparkle */ ?>
-				<path d="M262 140 L270 174 L304 182 L270 190 L262 224 L254 190 L220 182 L254 174 Z" fill="#ffffff" />
-			</svg>
-		<?php endif; ?>
+		<svg class="mage-mark-svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
+			<defs>
+				<linearGradient id="mageHatFill" x1="0" y1="0" x2="1" y2="1">
+					<stop offset="0%" stop-color="#bd7bff" />
+					<stop offset="100%" stop-color="#8a23e0" />
+				</linearGradient>
+				<linearGradient id="mageBrimFill" x1="0" y1="0" x2="0" y2="1">
+					<stop offset="0%" stop-color="#7d22cf" />
+					<stop offset="100%" stop-color="#5a118f" />
+				</linearGradient>
+			</defs>
+			<?php /* brim */ ?>
+			<ellipse cx="256" cy="258" rx="176" ry="30" fill="url(#mageBrimFill)" />
+			<?php /* pointed hat with a folded-over tip */ ?>
+			<path d="M188 18 C 178 50 168 78 152 96 L 214 126 L 200 232 L 340 232 L 330 110 Z" fill="url(#mageHatFill)" />
+			<?php /* hat-band sparkle */ ?>
+			<path d="M256 136 L265 167 L296 176 L265 185 L256 216 L247 185 L216 176 L247 167 Z" fill="#ffffff" />
+		</svg>
 	</div>
 </div>
