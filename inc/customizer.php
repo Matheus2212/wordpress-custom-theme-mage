@@ -23,7 +23,7 @@ add_action( 'customize_register', function( $wp_customize ) {
 
 	$wp_customize->add_control( 'mage_emblem_center', array(
 		'label'       => __( 'Imagem no centro do emblema', 'mage' ),
-		'description' => __( 'O logo do site precisa estar definido em "Identidade do Site" para usar essa opção.', 'mage' ),
+		'description' => __( 'Usada quando nenhuma imagem personalizada for enviada abaixo. O logo do site precisa estar definido em "Identidade do Site" para usar essa opção.', 'mage' ),
 		'section'     => 'mage_emblem',
 		'type'        => 'radio',
 		'choices'     => array(
@@ -31,6 +31,19 @@ add_action( 'customize_register', function( $wp_customize ) {
 			'logo' => __( 'Logo do site (com texto)', 'mage' ),
 		),
 	) );
+
+	// Custom emblem image — overrides the choice above when set.
+	$wp_customize->add_setting( 'mage_emblem_image', array(
+		'default'           => '',
+		'sanitize_callback' => 'esc_url_raw',
+		'transport'         => 'refresh',
+	) );
+
+	$wp_customize->add_control( new WP_Customize_Image_Control( $wp_customize, 'mage_emblem_image', array(
+		'label'       => __( 'Imagem personalizada do emblema', 'mage' ),
+		'description' => __( 'Envie uma imagem para o centro dos efeitos animados. Recomendado: PNG com fundo transparente. Se enviada, substitui a opção acima.', 'mage' ),
+		'section'     => 'mage_emblem',
+	) ) );
 } );
 
 if ( ! function_exists( 'mage_sanitize_emblem_center' ) ) {

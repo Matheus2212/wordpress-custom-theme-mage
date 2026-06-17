@@ -133,6 +133,7 @@ button{cursor:pointer;font-family:var(--font-base)}
 /* Centred on the aura's logo focus point (cx300/cy300 in a 600x820 viewBox) */
 .mage-mark{position:absolute;left:50%;top:36.6%;transform:translate(-50%,-50%);width:40%;display:flex;justify-content:center;filter:drop-shadow(0 0 18px rgba(185,108,255,.65))}
 .mage-mark--logo{width:66%}
+.mage-mark--image{width:52%}
 .mage-mark a{display:block;width:100%}
 .mage-mark img,.mage-mark-svg{width:100%;height:auto;display:block}
 

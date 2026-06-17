@@ -74,9 +74,15 @@
 	</svg>
 
 	<?php /* ── The mark in the middle — static, never animated ─────────────── */ ?>
-	<?php $mage_use_logo = ( 'logo' === get_theme_mod( 'mage_emblem_center', 'hat' ) && has_custom_logo() ); ?>
-	<div class="mage-mark<?php echo $mage_use_logo ? ' mage-mark--logo' : ''; ?>">
-		<?php if ( $mage_use_logo ) : ?>
+	<?php
+	$mage_emblem_image = get_theme_mod( 'mage_emblem_image', '' );
+	$mage_use_logo     = ( 'logo' === get_theme_mod( 'mage_emblem_center', 'hat' ) && has_custom_logo() );
+	$mage_mark_class   = $mage_emblem_image ? ' mage-mark--image' : ( $mage_use_logo ? ' mage-mark--logo' : '' );
+	?>
+	<div class="mage-mark<?php echo esc_attr( $mage_mark_class ); ?>">
+		<?php if ( $mage_emblem_image ) : ?>
+			<img src="<?php echo esc_url( $mage_emblem_image ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
+		<?php elseif ( $mage_use_logo ) : ?>
 			<?php the_custom_logo(); ?>
 		<?php else : ?>
 			<svg class="mage-mark-svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
