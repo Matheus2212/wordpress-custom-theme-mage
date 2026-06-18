@@ -73,33 +73,35 @@
 		</g>
 	</svg>
 
-	<?php /* ── The mage logo in the middle — static, never animated ──────── */ ?>
-	<div class="mage-mark">
-		<?php if ( has_custom_logo() ) : ?>
+	<?php /* ── The mark in the middle — static, never animated ─────────────── */ ?>
+	<?php
+	$mage_emblem_image = get_theme_mod( 'mage_emblem_image', '' );
+	$mage_use_logo     = ( 'logo' === get_theme_mod( 'mage_emblem_center', 'hat' ) && has_custom_logo() );
+	$mage_mark_class   = $mage_emblem_image ? ' mage-mark--image' : ( $mage_use_logo ? ' mage-mark--logo' : '' );
+	?>
+	<div class="mage-mark<?php echo esc_attr( $mage_mark_class ); ?>">
+		<?php if ( $mage_emblem_image ) : ?>
+			<img src="<?php echo esc_url( $mage_emblem_image ); ?>" alt="<?php echo esc_attr( get_bloginfo( 'name' ) ); ?>" />
+		<?php elseif ( $mage_use_logo ) : ?>
 			<?php the_custom_logo(); ?>
 		<?php else : ?>
-			<svg class="mage-mark-svg" viewBox="0 0 120 160" aria-hidden="true" focusable="false">
+			<svg class="mage-mark-svg" viewBox="0 0 512 512" aria-hidden="true" focusable="false">
 				<defs>
-					<linearGradient id="mageMarkFill" x1="0" y1="0" x2="0" y2="1">
-						<stop offset="0%" stop-color="#c58bff" />
-						<stop offset="100%" stop-color="#810AD2" />
+					<linearGradient id="mageHatFill" x1="0" y1="0" x2="1" y2="1">
+						<stop offset="0%" stop-color="#bd7bff" />
+						<stop offset="100%" stop-color="#8a23e0" />
+					</linearGradient>
+					<linearGradient id="mageBrimFill" x1="0" y1="0" x2="0" y2="1">
+						<stop offset="0%" stop-color="#7d22cf" />
+						<stop offset="100%" stop-color="#5a118f" />
 					</linearGradient>
 				</defs>
-				<g fill="url(#mageMarkFill)">
-					<?php /* hat with a curled tip */ ?>
-					<path d="M30 60 Q 36 20 54 8 Q 45 19 60 16 Q 72 30 90 60 Q 60 70 30 60 Z" />
-					<?php /* brim */ ?>
-					<ellipse cx="60" cy="61" rx="38" ry="8" />
-					<?php /* face */ ?>
-					<path d="M35 66 Q 35 95 49 108 L 71 108 Q 85 95 85 66 Q 60 75 35 66 Z" />
-					<?php /* beard */ ?>
-					<path d="M41 96 Q 45 142 60 153 Q 75 142 79 96 Q 60 106 41 96 Z" />
-				</g>
-				<?php /* eyes (negative space) */ ?>
-				<ellipse cx="51" cy="80" rx="3.4" ry="4.6" fill="#15052b" />
-				<ellipse cx="69" cy="80" rx="3.4" ry="4.6" fill="#15052b" />
-				<?php /* hat-band star */ ?>
-				<path d="M64 47 l2.6 7.4 7.4 2.6 -7.4 2.6 -2.6 7.4 -2.6 -7.4 -7.4 -2.6 7.4 -2.6 z" fill="#ffffff" />
+				<?php /* brim */ ?>
+				<ellipse cx="256" cy="258" rx="176" ry="30" fill="url(#mageBrimFill)" />
+				<?php /* pointed hat with a folded-over tip */ ?>
+				<path d="M188 18 C 178 50 168 78 152 96 L 214 126 L 200 232 L 340 232 L 330 110 Z" fill="url(#mageHatFill)" />
+				<?php /* hat-band sparkle */ ?>
+				<path d="M256 136 L265 167 L296 176 L265 185 L256 216 L247 185 L216 176 L247 167 Z" fill="#ffffff" />
 			</svg>
 		<?php endif; ?>
 	</div>
