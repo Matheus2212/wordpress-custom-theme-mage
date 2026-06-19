@@ -70,7 +70,7 @@ button{cursor:pointer;font-family:var(--font-base)}
 
 /* ── Header ─────────────────────────────────────────────────────────────────── */
 .site-header{position:fixed;top:0;left:0;right:0;z-index:1000;padding-top:18px;background:transparent}
-.header-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;width:100%;padding:7px 7px 7px 22px;border-radius:999px;background:linear-gradient(135deg,rgba(245,240,255,.55),rgba(214,196,246,.34));border:1px solid rgba(255,255,255,.55);box-shadow:0 8px 30px rgba(94,40,160,.16),inset 0 1px 0 rgba(255,255,255,.7);-webkit-backdrop-filter:blur(18px) saturate(180%);backdrop-filter:blur(18px) saturate(180%)}
+.header-inner{display:flex;align-items:center;justify-content:space-between;gap:18px;width:100%;padding:7px 7px 7px 22px;border-radius:999px;background:linear-gradient(135deg,rgba(245,240,255,.38),rgba(214,196,246,.20));border:1px solid rgba(255,255,255,.55);box-shadow:0 8px 30px rgba(94,40,160,.16),inset 0 1px 0 rgba(255,255,255,.7);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%)}
 .site-branding{display:flex;align-items:center;flex-shrink:0}
 .site-branding a{display:flex;align-items:center}
 .site-branding img{height:44px;width:auto}
@@ -79,7 +79,7 @@ button{cursor:pointer;font-family:var(--font-base)}
 
 /* ── Primary Nav ────────────────────────────────────────────────────────────── */
 .main-navigation{display:flex;align-items:center}
-.main-navigation ul{display:flex;align-items:center;gap:2px;padding:5px;border-radius:999px;background:rgba(255,255,255,.42);border:1px solid rgba(255,255,255,.6);box-shadow:inset 0 1px 0 rgba(255,255,255,.6);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+.main-navigation ul{display:flex;align-items:center;gap:2px;padding:5px;border-radius:999px;background:rgba(255,255,255,.28);border:1px solid rgba(255,255,255,.5);box-shadow:inset 0 1px 0 rgba(255,255,255,.5);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
 .main-navigation ul li{position:relative}
 .main-navigation ul a{display:block;padding:9px 18px;color:#3a2458;font-weight:600;font-size:.92rem;border-radius:999px;transition:all var(--transition);white-space:nowrap}
 .main-navigation ul a:hover{color:var(--color-primary);background:rgba(255,255,255,.6)}
