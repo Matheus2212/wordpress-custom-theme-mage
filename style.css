@@ -352,6 +352,77 @@ button{cursor:pointer;font-family:var(--font-base)}
 .related-posts{padding:64px 0}
 .related-posts .section-title{margin-bottom:32px}
 
+/* ── Serviços landing page ──────────────────────────────────────────────────── */
+.lp-center{text-align:center}
+.lp-mt{margin-top:40px}
+.lp-split{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.lp-split__text h2{margin-bottom:16px}
+.lp-richtext p{margin-bottom:1rem;color:var(--color-gray-600);line-height:1.8}
+
+/* Hero */
+.lp-hero{background:var(--color-secondary);color:var(--color-white);padding:calc(var(--header-h) + 36px) 0 72px;position:relative;overflow:hidden}
+.lp-hero::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 70% at 80% 20%,rgba(129,10,210,.35) 0%,transparent 70%);pointer-events:none}
+.lp-hero .container{position:relative;z-index:1}
+.lp-hero__topbar{display:flex;align-items:center;justify-content:space-between;gap:16px;margin-bottom:48px}
+.lp-hero__logo img{height:40px;width:auto;filter:brightness(0) invert(1)}
+.lp-hero__logotext{font-size:1.3rem;font-weight:800;color:var(--color-white)}
+.lp-hero__phone{display:inline-block;padding:8px 18px;border:1px solid rgba(255,255,255,.4);border-radius:40px;color:var(--color-white);font-weight:600;font-size:.9rem}
+.lp-hero__phone:hover{background:var(--color-primary);border-color:var(--color-primary);color:var(--color-white)}
+.lp-hero__grid{display:grid;grid-template-columns:1.1fr .9fr;gap:48px;align-items:start}
+.lp-hero__content h1{font-size:clamp(2rem,4vw,3.2rem);font-weight:800;line-height:1.1;color:var(--color-white);margin-bottom:20px}
+.lp-hero__content p{font-size:1.05rem;color:rgba(222,222,222,.8);max-width:460px}
+
+/* Lead form */
+.lp-form-card{background:var(--color-white);border-radius:var(--radius-lg);padding:28px;box-shadow:var(--shadow-md)}
+.lp-form__heading{font-size:1.15rem;font-weight:700;color:var(--color-secondary);text-align:center;margin-bottom:18px}
+.lp-form{display:flex;flex-direction:column;gap:12px}
+.lp-form input,.lp-form textarea{width:100%;padding:12px 14px;border:1px solid var(--color-gray-200);border-radius:var(--radius);font-family:var(--font-base);font-size:.9rem;color:var(--color-gray-800);background:var(--color-gray-100)}
+.lp-form input:focus,.lp-form textarea:focus{outline:none;border-color:var(--color-primary);background:var(--color-white)}
+.lp-form textarea{resize:vertical;min-height:84px}
+.lp-form .btn{justify-content:center;margin-top:4px}
+.lp-alert{padding:12px 16px;border-radius:var(--radius);font-size:.9rem;margin-bottom:16px}
+.lp-alert--ok{background:rgba(34,160,90,.12);color:#1b7a45}
+.lp-alert--erro{background:rgba(210,30,40,.1);color:#b3261e}
+
+/* Media placeholders */
+.lp-media{position:relative;border-radius:var(--radius-lg);overflow:hidden;background:var(--color-gray-200);aspect-ratio:16/10;display:flex;align-items:center;justify-content:center}
+.lp-media img{width:100%;height:100%;object-fit:cover}
+.lp-media iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+.lp-media__play{width:64px;height:64px;border-radius:50%;background:rgba(129,10,210,.85);position:relative}
+.lp-media__play::after{content:'';position:absolute;top:50%;left:54%;transform:translate(-50%,-50%);border-style:solid;border-width:11px 0 11px 18px;border-color:transparent transparent transparent #fff}
+.lp-media__pic{width:40%;height:40%;border-radius:var(--radius);background:repeating-linear-gradient(135deg,var(--color-gray-200),var(--color-gray-200) 12px,#dcdce4 12px,#dcdce4 24px)}
+
+/* Benefits */
+.lp-benefits__grid{display:grid;grid-template-columns:1fr 1fr;gap:32px 48px;max-width:900px;margin:48px auto 0}
+.lp-benefit{display:flex;gap:16px;align-items:flex-start}
+.lp-benefit__icon{flex-shrink:0;width:44px;height:44px;border-radius:var(--radius);background:rgba(129,10,210,.1);color:var(--color-primary);display:flex;align-items:center;justify-content:center}
+.lp-benefit__icon svg{width:24px;height:24px}
+.lp-benefit h3{font-size:1rem;margin-bottom:6px;color:var(--color-secondary)}
+.lp-benefit p{font-size:.88rem;color:var(--color-gray-600);line-height:1.6}
+
+/* Testimonials */
+.lp-testimonials__grid{margin-top:48px;align-items:stretch}
+.lp-testimonials__cards{display:flex;flex-direction:column;gap:20px;justify-content:center}
+.lp-testimonial{display:flex;gap:16px;background:var(--color-secondary);color:var(--color-white);border-radius:var(--radius-lg);padding:22px}
+.lp-testimonial__avatar{flex-shrink:0;width:44px;height:44px;border-radius:50%;background:var(--color-primary)}
+.lp-testimonial figcaption strong{display:block;margin-bottom:6px;font-size:.95rem}
+.lp-testimonial figcaption p{font-size:.85rem;color:rgba(222,222,222,.75);line-height:1.6;margin:0}
+
+/* FAQ */
+.lp-faq__list{max-width:760px;margin:48px auto 0;display:flex;flex-direction:column;gap:14px}
+.lp-faq__item{border:1px solid var(--color-gray-200);border-radius:var(--radius);background:var(--color-white);overflow:hidden}
+.lp-faq__item summary{cursor:pointer;list-style:none;padding:16px 22px;font-weight:600;color:var(--color-secondary);font-size:.95rem;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.lp-faq__item summary::-webkit-details-marker{display:none}
+.lp-faq__item summary::after{content:'+';color:var(--color-primary);font-size:1.3rem;font-weight:400;line-height:1}
+.lp-faq__item[open] summary::after{content:'–'}
+.lp-faq__answer{padding:0 22px 18px;color:var(--color-gray-600);font-size:.92rem;line-height:1.7}
+
+/* Final CTA */
+.lp-final{background:var(--color-primary);color:var(--color-white);padding:72px 0}
+.lp-final__text h2{font-size:clamp(1.8rem,3.5vw,2.6rem);color:var(--color-white);margin-bottom:16px;line-height:1.1}
+.lp-final__text p{color:rgba(255,255,255,.85);font-size:1.05rem;max-width:420px}
+.lp-form-card--final .lp-form input,.lp-form-card--final .lp-form textarea{background:var(--color-white)}
+
 /* ── Responsive ─────────────────────────────────────────────────────────────── */
 @media(max-width:1024px){
   .grid-4{grid-template-columns:repeat(2,1fr)}
@@ -382,7 +453,12 @@ button{cursor:pointer;font-family:var(--font-base)}
   .post-nav .nav-next a{text-align:left;align-items:flex-start}
   .author-box{flex-direction:column;text-align:center;align-items:center}
   .widget-area{flex-direction:column}
+  .lp-hero__grid,.lp-split,.lp-benefits__grid{grid-template-columns:1fr;gap:32px}
+  .lp-hero__content{text-align:center}
+  .lp-hero__content p{margin-inline:auto}
+  .lp-final__text p{margin-inline:auto}
 }
 @media(max-width:480px){
   .posts-grid{grid-template-columns:1fr}
+  .lp-hero__topbar{flex-direction:column;gap:14px}
 }
