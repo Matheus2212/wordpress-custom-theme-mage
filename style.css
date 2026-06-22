@@ -424,6 +424,30 @@ button{cursor:pointer;font-family:var(--font-base)}
 .lp-final__text p{color:rgba(255,255,255,.85);font-size:1.05rem;max-width:420px}
 .lp-form-card--final .lp-form input,.lp-form-card--final .lp-form textarea{background:var(--color-white)}
 
+/* ── Testimonials carousel ──────────────────────────────────────────────────── */
+.mage-testimonials{padding:80px 0}
+.mage-testimonials .section-title{margin-bottom:40px}
+.mage-carousel{position:relative;display:flex;align-items:center;gap:12px}
+.mage-carousel__viewport{overflow:hidden;flex:1;min-width:0}
+.mage-carousel__track{display:flex;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.mage-testimonial{flex:0 0 100%;min-width:0;padding:0 4px}
+.mage-testimonial__quote{font-size:clamp(1rem,1.5vw,1.25rem);font-style:italic;line-height:1.7;color:var(--color-gray-800);margin-bottom:28px}
+.mage-testimonial__quote p{margin-bottom:1rem}
+.mage-testimonial__quote p:last-child{margin-bottom:0}
+.mage-testimonial__author{display:flex;align-items:center;gap:14px}
+.mage-testimonial__avatar img{width:52px;height:52px;border-radius:50%;object-fit:cover;display:block}
+.mage-testimonial__meta{display:flex;flex-direction:column}
+.mage-testimonial__meta strong{color:var(--color-secondary);font-size:.95rem}
+.mage-testimonial__role{color:var(--color-primary);font-size:.85rem}
+.mage-carousel__nav{flex-shrink:0;width:44px;height:44px;border-radius:50%;border:1px solid var(--color-gray-200);background:var(--color-white);color:var(--color-primary);font-size:1.5rem;line-height:1;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:all var(--transition)}
+.mage-carousel__nav:hover{background:var(--color-primary);color:var(--color-white);border-color:var(--color-primary)}
+.mage-testimonials--dark{background:var(--color-secondary)}
+.mage-testimonials--dark .section-title{color:var(--color-white)}
+.mage-testimonials--dark .mage-testimonial__quote{color:rgba(255,255,255,.92)}
+.mage-testimonials--dark .mage-testimonial__meta strong{color:var(--color-white)}
+.mage-testimonials--dark .mage-carousel__nav{background:rgba(255,255,255,.08);border-color:rgba(255,255,255,.2);color:var(--color-white)}
+.mage-testimonials--dark .mage-carousel__nav:hover{background:var(--color-primary);border-color:var(--color-primary)}
+
 /* ── Responsive ─────────────────────────────────────────────────────────────── */
 @media(max-width:1024px){
   .grid-4{grid-template-columns:repeat(2,1fr)}
@@ -458,6 +482,9 @@ button{cursor:pointer;font-family:var(--font-base)}
   .lp-hero__content{text-align:center}
   .lp-hero__content p{margin-inline:auto}
   .lp-final__text p{margin-inline:auto}
+  .mage-testimonials{padding:56px 0}
+  .mage-carousel{gap:6px}
+  .mage-carousel__nav{width:38px;height:38px;font-size:1.25rem}
 }
 @media(max-width:480px){
   .posts-grid{grid-template-columns:1fr}
