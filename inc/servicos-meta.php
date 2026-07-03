@@ -9,6 +9,19 @@
  * @package mage
  */
 
+/**
+ * Use the classic editor for the structured landing-page CPTs so their
+ * meta-box fields are always visible when adding/editing an item — without
+ * requiring the Classic Editor plugin. Posts and Pages keep the block
+ * editor. REST stays enabled for these types.
+ */
+add_filter( 'use_block_editor_for_post_type', function ( $use_block, $post_type ) {
+	if ( in_array( $post_type, array( 'servicos', 'sobre', 'depoimentos' ), true ) ) {
+		return false;
+	}
+	return $use_block;
+}, 10, 2 );
+
 if ( ! function_exists( 'mage_lp_field' ) ) {
 	/**
 	 * Render a single labelled meta field.
