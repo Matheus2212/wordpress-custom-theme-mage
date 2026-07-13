@@ -4,8 +4,9 @@
  *
  * Sections mirror the provided wireframe (hero + lead form, service,
  * benefits, testimonials, about, FAQ, final CTA) using the theme's brand
- * colors. Editable content comes from post meta (custom fields) with
- * sensible placeholder fallbacks so the page looks complete out of the box.
+ * colors. Content is managed in the editor via the "Landing page do
+ * serviço" meta box; testimonials come from the "Depoimentos" CPT and the
+ * about block from a selected "Sobre Nós" entry.
  *
  * @package mage
  */
@@ -21,7 +22,7 @@ while ( have_posts() ) :
 		return ( '' !== $value && null !== $value ) ? $value : $default;
 	};
 
-	$lead_status = isset( $_GET['lead'] ) ? sanitize_key( wp_unslash( $_GET['lead'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+	$lead_status  = isset( $_GET['lead'] ) ? sanitize_key( wp_unslash( $_GET['lead'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 	$benefit_icon = '<svg viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false"><path d="M3 9l1.5-5h15L21 9M3 9v10a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1V9M3 9h18M8 13h8" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
 	?>
 
@@ -96,18 +97,29 @@ while ( have_posts() ) :
 				<div class="lp-benefits__grid">
 					<?php
 					$default_benefit_desc = __( 'Insira aqui a descrição do benefício que seu produto gera. Mais tempo? Mais dinheiro? Economia? Durabilidade? Prazo de atendimento? Preço?', 'mage' );
-					for ( $i = 1; $i <= 6; $i++ ) :
-						$b_title = $m( "lp_beneficio_{$i}_titulo", __( 'Benefício do serviço', 'mage' ) );
-						$b_desc  = $m( "lp_beneficio_{$i}_desc", $default_benefit_desc );
+					$benefits = array();
+					for ( $i = 1; $i <= 6; $i++ ) {
+						$b_title = $m( "lp_beneficio_{$i}_titulo" );
+						$b_desc  = $m( "lp_beneficio_{$i}_desc" );
+						if ( '' !== $b_title || '' !== $b_desc ) {
+							$benefits[] = array( $b_title, $b_desc );
+						}
+					}
+					if ( empty( $benefits ) ) {
+						for ( $i = 0; $i < 6; $i++ ) {
+							$benefits[] = array( __( 'Benefício do serviço', 'mage' ), $default_benefit_desc );
+						}
+					}
+					foreach ( $benefits as $benefit ) :
 						?>
 						<div class="lp-benefit">
 							<span class="lp-benefit__icon"><?php echo $benefit_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></span>
 							<div>
-								<h3><?php echo esc_html( $b_title ); ?></h3>
-								<p><?php echo esc_html( $b_desc ); ?></p>
+								<h3><?php echo esc_html( '' !== $benefit[0] ? $benefit[0] : __( 'Benefício do serviço', 'mage' ) ); ?></h3>
+								<p><?php echo esc_html( $benefit[1] ); ?></p>
 							</div>
 						</div>
-					<?php endfor; ?>
+					<?php endforeach; ?>
 				</div>
 				<div class="lp-center lp-mt">
 					<a href="#lp-contato" class="btn btn-primary"><?php echo esc_html( $m( 'lp_cta_label', __( 'Chamada para ação', 'mage' ) ) ); ?></a>
@@ -115,63 +127,21 @@ while ( have_posts() ) :
 			</div>
 		</section>
 
-		<?php /* ── Testimonials ─────────────────────────────────────────────── */ ?>
-		<section class="section lp-testimonials">
-			<div class="container">
-				<h2 class="section-title lp-center"><?php echo esc_html( $m( 'lp_depoimentos_titulo', __( 'Quem conhece, recomenda.', 'mage' ) ) ); ?></h2>
-				<div class="lp-split lp-testimonials__grid">
-					<div class="lp-media">
-						<?php
-						$dep_video = $m( 'lp_depoimento_video' );
-						if ( $dep_video ) :
-							echo wp_oembed_get( esc_url( $dep_video ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						else :
-							echo '<span class="lp-media__play" aria-hidden="true"></span>';
-						endif;
-						?>
-					</div>
-					<div class="lp-testimonials__cards">
-						<?php
-						$default_dep = __( 'Insira aqui o depoimento do cliente. Insira aqui o depoimento do cliente.', 'mage' );
-						for ( $i = 1; $i <= 2; $i++ ) :
-							$t_name = $m( "lp_depoimento_{$i}_nome", __( 'Nome do cliente', 'mage' ) );
-							$t_text = $m( "lp_depoimento_{$i}_texto", $default_dep );
-							?>
-							<figure class="lp-testimonial">
-								<span class="lp-testimonial__avatar" aria-hidden="true"></span>
-								<figcaption>
-									<strong><?php echo esc_html( $t_name ); ?></strong>
-									<p><?php echo esc_html( $t_text ); ?></p>
-								</figcaption>
-							</figure>
-						<?php endfor; ?>
-					</div>
-				</div>
-				<div class="lp-center lp-mt">
-					<a href="#lp-contato" class="btn btn-primary"><?php echo esc_html( $m( 'lp_cta_label', __( 'Chamada para ação', 'mage' ) ) ); ?></a>
-				</div>
-			</div>
-		</section>
+		<?php
+		/* ── Testimonials (from the "Depoimentos" CPT) ─────────────────────── */
+		if ( $m( 'lp_depoimentos_mostrar', '1' ) && function_exists( 'mage_testimonials_carousel' ) ) {
+			echo mage_testimonials_carousel( array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+				'title' => $m( 'lp_depoimentos_titulo', __( 'Quem conhece, recomenda.', 'mage' ) ),
+				'theme' => 'light',
+			) );
+		}
 
-		<?php /* ── About ────────────────────────────────────────────────────── */ ?>
-		<section class="section section-light lp-about">
-			<div class="container lp-split">
-				<div class="lp-media">
-					<?php
-					$about_img = $m( 'lp_quem_somos_imagem' );
-					if ( $about_img ) :
-						echo '<img src="' . esc_url( $about_img ) . '" alt="' . esc_attr( get_bloginfo( 'name' ) ) . '">';
-					else :
-						echo '<span class="lp-media__pic" aria-hidden="true"></span>';
-					endif;
-					?>
-				</div>
-				<div class="lp-split__text">
-					<h2 class="section-title"><?php echo esc_html( $m( 'lp_quem_somos_titulo', __( 'Quem Somos', 'mage' ) ) ); ?></h2>
-					<p><?php echo esc_html( $m( 'lp_quem_somos_texto', __( 'Conte aqui quem você é e como você ajuda as pessoas com seus produtos ou serviços. Ao lado, use uma foto sua ou da sua empresa.', 'mage' ) ) ); ?></p>
-				</div>
-			</div>
-		</section>
+		/* ── About (from the "Sobre Nós" CPT) ──────────────────────────────── */
+		$sobre_id = (int) $m( 'lp_sobre_id', 0 );
+		if ( $sobre_id && function_exists( 'mage_about_section' ) ) {
+			echo mage_about_section( $sobre_id ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		?>
 
 		<?php /* ── FAQ ──────────────────────────────────────────────────────── */ ?>
 		<section class="section lp-faq">
@@ -181,15 +151,26 @@ while ( have_posts() ) :
 					<?php
 					$default_q = __( 'Quando vou começar a ver o resultado das minhas campanhas?', 'mage' );
 					$default_a = __( 'Insira aqui a resposta para esta pergunta frequente do seu cliente.', 'mage' );
-					for ( $i = 1; $i <= 5; $i++ ) :
-						$q = $m( "lp_faq_{$i}_pergunta", $default_q );
-						$a = $m( "lp_faq_{$i}_resposta", $default_a );
+					$faqs = array();
+					for ( $i = 1; $i <= 6; $i++ ) {
+						$q = $m( "lp_faq_{$i}_pergunta" );
+						$a = $m( "lp_faq_{$i}_resposta" );
+						if ( '' !== $q ) {
+							$faqs[] = array( $q, $a );
+						}
+					}
+					if ( empty( $faqs ) ) {
+						for ( $i = 0; $i < 3; $i++ ) {
+							$faqs[] = array( $default_q, $default_a );
+						}
+					}
+					foreach ( $faqs as $index => $faq ) :
 						?>
-						<details class="lp-faq__item"<?php echo 1 === $i ? ' open' : ''; ?>>
-							<summary><?php echo esc_html( $q ); ?></summary>
-							<div class="lp-faq__answer"><?php echo wp_kses_post( wpautop( $a ) ); ?></div>
+						<details class="lp-faq__item"<?php echo 0 === $index ? ' open' : ''; ?>>
+							<summary><?php echo esc_html( $faq[0] ); ?></summary>
+							<div class="lp-faq__answer"><?php echo wp_kses_post( wpautop( '' !== $faq[1] ? $faq[1] : $default_a ) ); ?></div>
 						</details>
-					<?php endfor; ?>
+					<?php endforeach; ?>
 				</div>
 			</div>
 		</section>

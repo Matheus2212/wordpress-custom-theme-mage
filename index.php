@@ -129,6 +129,11 @@
 	</section>
 	<?php endif; ?>
 
+	<?php
+	// Testimonials carousel (renders only when there are "depoimentos").
+	echo mage_testimonials_carousel( array( 'theme' => 'dark', 'title' => __( 'Depoimentos', 'mage' ) ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	?>
+
 	<section class="cta-strip">
 		<div class="container">
 			<h2><?php esc_html_e( 'Pronto para transformar seu negócio?', 'mage' ); ?></h2>
