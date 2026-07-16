@@ -4,7 +4,7 @@ Theme URI: https://magesystems.com.br/
 Author: Mage Systems
 Author URI: https://magesystems.com.br/
 Description: Tema personalizado da Mage Systems — rápido, bonito e com SEO otimizado.
-Version: 2.3.1
+Version: 2.3.2
 Tested up to: 6.5
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -478,10 +478,22 @@ button{cursor:pointer;font-family:var(--font-base)}
 .cookie-consent__decline{background:transparent;border:none;color:#5a4a76;font-weight:600;font-size:.85rem;padding:9px 8px;cursor:pointer;transition:color var(--transition)}
 .cookie-consent__decline:hover{color:var(--color-primary)}
 
+/* ── Página de contato ──────────────────────────────────────────────────────── */
+.contato-grid{display:grid;grid-template-columns:1fr 1fr;gap:56px;align-items:start}
+.contato-info .lp-richtext{margin-bottom:28px}
+.contato-list{display:flex;flex-direction:column;gap:22px}
+.contato-list li{display:flex;gap:16px;align-items:flex-start}
+.contato-list__icon{flex-shrink:0;width:44px;height:44px;border-radius:var(--radius);background:rgba(129,10,210,.1);color:var(--color-primary);display:flex;align-items:center;justify-content:center}
+.contato-list__icon svg{width:22px;height:22px}
+.contato-list__body{font-size:.95rem;color:var(--color-gray-600);line-height:1.6}
+.contato-list__body strong{display:block;color:var(--color-secondary);font-size:.9rem;margin-bottom:3px}
+.contato-list__body a{color:var(--color-primary);font-weight:600}
+
 /* ── Responsive ─────────────────────────────────────────────────────────────── */
 @media(max-width:1024px){
   .grid-4{grid-template-columns:repeat(2,1fr)}
   .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
+  .contato-grid{grid-template-columns:1fr;gap:40px}
   .blog-wrap,.blog-wrap.has-sidebar{grid-template-columns:1fr;gap:40px}
   .widget-area{position:static;flex-direction:row;flex-wrap:wrap}
   .widget-area .widget{flex:1 1 240px}
