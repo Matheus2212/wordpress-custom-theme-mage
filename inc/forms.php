@@ -31,6 +31,17 @@ if ( ! function_exists( 'mage_handle_lead' ) ) {
 
 		$servico = $servico_id ? get_the_title( $servico_id ) : '';
 
+		// Persist the submission first, so leads are never lost if e-mail fails.
+		if ( function_exists( 'mage_store_lead' ) ) {
+			mage_store_lead( array(
+				'nome'     => $nome,
+				'email'    => $email,
+				'telefone' => $telefone,
+				'mensagem' => $mensagem,
+				'origem'   => $servico ? $servico : __( 'Formulário do site', 'mage' ),
+			) );
+		}
+
 		/* translators: %s: service or site name. */
 		$subject = sprintf( __( 'Novo contato pelo site — %s', 'mage' ), $servico ? $servico : get_bloginfo( 'name' ) );
 

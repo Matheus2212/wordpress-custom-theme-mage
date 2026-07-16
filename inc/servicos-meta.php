@@ -16,7 +16,7 @@
  * editor. REST stays enabled for these types.
  */
 add_filter( 'use_block_editor_for_post_type', function ( $use_block, $post_type ) {
-	if ( in_array( $post_type, array( 'servicos', 'sobre', 'depoimentos' ), true ) ) {
+	if ( in_array( $post_type, array( 'servicos', 'sobre', 'depoimentos', 'projetos' ), true ) ) {
 		return false;
 	}
 	return $use_block;
