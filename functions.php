@@ -1,5 +1,5 @@
 <?php
-defined( '_S_VERSION' ) || define( '_S_VERSION', '2.1.0' );
+defined( '_S_VERSION' ) || define( '_S_VERSION', '2.2.1' );
 
 // ── Theme Setup ──────────────────────────────────────────────────────────────
 function mage_setup() {
@@ -317,4 +317,6 @@ require get_template_directory() . '/inc/forms.php';
 require get_template_directory() . '/inc/testimonials.php';
 require get_template_directory() . '/inc/about.php';
 require get_template_directory() . '/inc/servicos-meta.php';
+require get_template_directory() . '/inc/projetos-meta.php';
+require get_template_directory() . '/inc/leads.php';
 require get_template_directory() . '/inc/updater.php';

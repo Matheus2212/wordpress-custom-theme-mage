@@ -2,8 +2,15 @@
 
 <?php while ( have_posts() ) : the_post(); ?>
 
-<div class="single-hero">
+<?php $mage_bg = mage_projeto_background( get_the_ID(), '' ); ?>
+<div class="single-hero projeto-hero<?php echo $mage_bg ? ' has-color' : ''; ?>"<?php echo $mage_bg ? ' style="background:' . esc_attr( $mage_bg ) . ';"' : ''; ?>>
 	<div class="container">
+		<?php
+		$mage_icon = mage_projeto_icon( get_the_ID(), array( 96, 96 ) );
+		if ( $mage_icon ) {
+			echo '<div class="projeto-hero__icon">' . $mage_icon . '</div>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image is safe.
+		}
+		?>
 		<span class="tag"><?php esc_html_e( 'Projeto', 'mage' ); ?></span>
 		<h1><?php the_title(); ?></h1>
 	</div>

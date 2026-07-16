@@ -12,12 +12,17 @@
 	<div class="container">
 		<div class="posts-grid">
 			<?php if ( have_posts() ) : while ( have_posts() ) : the_post(); ?>
-				<article <?php post_class( 'card' ); ?>>
-					<?php if ( has_post_thumbnail() ) : ?>
-						<div class="card-thumbnail">
-							<a href="<?php the_permalink(); ?>"><?php the_post_thumbnail( 'mage-card' ); ?></a>
-						</div>
-					<?php endif; ?>
+				<article <?php post_class( 'card projeto-card' ); ?>>
+					<a href="<?php the_permalink(); ?>" class="projeto-card__tile" style="background:<?php echo esc_attr( mage_projeto_background( get_the_ID(), 'var(--color-primary)' ) ); ?>;">
+						<?php
+						$mage_icon = mage_projeto_icon( get_the_ID(), array( 128, 128 ) );
+						if ( $mage_icon ) {
+							echo $mage_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image output is safe.
+						} elseif ( has_post_thumbnail() ) {
+							the_post_thumbnail( 'mage-card', array( 'class' => 'projeto-card__cover' ) );
+						}
+						?>
+					</a>
 					<div class="card-body">
 						<h2 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h2>
 						<p class="card-excerpt"><?php echo esc_html( get_the_excerpt() ); ?></p>

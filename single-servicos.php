@@ -54,7 +54,12 @@ while ( have_posts() ) :
 						<?php elseif ( 'erro' === $lead_status ) : ?>
 							<p class="lp-alert lp-alert--erro"><?php esc_html_e( 'Não foi possível enviar. Verifique os dados e tente novamente.', 'mage' ); ?></p>
 						<?php endif; ?>
-						<?php mage_lead_form(); ?>
+						<?php
+						mage_lead_form( array(
+							'heading' => $m( 'lp_form_titulo', __( 'Solicite seu orçamento', 'mage' ) ),
+							'button'  => $m( 'lp_cta_label', __( 'Chamada para ação', 'mage' ) ),
+						) );
+						?>
 					</div>
 				</div>
 			</div>
@@ -129,7 +134,7 @@ while ( have_posts() ) :
 
 		<?php
 		/* ── Testimonials (from the "Depoimentos" CPT) ─────────────────────── */
-		if ( $m( 'lp_depoimentos_mostrar', '1' ) && function_exists( 'mage_testimonials_carousel' ) ) {
+		if ( '0' !== get_post_meta( get_the_ID(), 'lp_depoimentos_mostrar', true ) && function_exists( 'mage_testimonials_carousel' ) ) {
 			echo mage_testimonials_carousel( array( // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 				'title' => $m( 'lp_depoimentos_titulo', __( 'Quem conhece, recomenda.', 'mage' ) ),
 				'theme' => 'light',
