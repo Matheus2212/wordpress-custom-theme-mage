@@ -103,4 +103,48 @@
 		carousel.addEventListener('focusin', stop);
 		carousel.addEventListener('touchstart', stop, { passive: true });
 	});
+
+	// ── Back to top ─────────────────────────────────────────────────────────────
+	var backToTop = document.querySelector('.back-to-top');
+	if (backToTop) {
+		backToTop.hidden = false;
+		var toggleBackToTop = function () {
+			if (window.scrollY > 400) {
+				backToTop.classList.add('is-visible');
+			} else {
+				backToTop.classList.remove('is-visible');
+			}
+		};
+		window.addEventListener('scroll', toggleBackToTop, { passive: true });
+		toggleBackToTop();
+		backToTop.addEventListener('click', function () {
+			window.scrollTo({ top: 0, behavior: 'smooth' });
+		});
+	}
+
+	// ── Cookie consent ──────────────────────────────────────────────────────────
+	var cookieBox = document.querySelector('.cookie-consent');
+	if (cookieBox) {
+		var CONSENT_KEY = 'mageCookieConsent';
+		var stored = null;
+		try { stored = window.localStorage.getItem(CONSENT_KEY); } catch (e) {}
+
+		if (!stored) {
+			cookieBox.hidden = false;
+			document.body.classList.add('cookie-open');
+			window.requestAnimationFrame(function () { cookieBox.classList.add('is-visible'); });
+		}
+
+		var closeConsent = function (value) {
+			try { window.localStorage.setItem(CONSENT_KEY, value); } catch (e) {}
+			cookieBox.classList.remove('is-visible');
+			document.body.classList.remove('cookie-open');
+			window.setTimeout(function () { cookieBox.hidden = true; }, 300);
+		};
+
+		var acceptBtn = cookieBox.querySelector('.cookie-consent__accept');
+		var declineBtn = cookieBox.querySelector('.cookie-consent__decline');
+		if (acceptBtn) { acceptBtn.addEventListener('click', function () { closeConsent('accepted'); }); }
+		if (declineBtn) { declineBtn.addEventListener('click', function () { closeConsent('declined'); }); }
+	}
 })();

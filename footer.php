@@ -55,9 +55,6 @@
 					<li><?php esc_html_e( 'Concórdia – SC · CEP 89.708-130', 'mage' ); ?></li>
 					<li><?php esc_html_e( 'CNPJ 39.944.754/0001-35', 'mage' ); ?></li>
 				</ul>
-				<?php if ( is_active_sidebar( 'footer-1' ) ) : ?>
-					<?php dynamic_sidebar( 'footer-1' ); ?>
-				<?php endif; ?>
 			</div>
 
 		</div>
@@ -83,6 +80,23 @@
 		</div>
 	</div>
 </footer>
+
+<button type="button" class="back-to-top" aria-label="<?php esc_attr_e( 'Voltar ao topo', 'mage' ); ?>" hidden>
+	<svg width="18" height="18" viewBox="0 0 24 24" fill="none" aria-hidden="true" focusable="false">
+		<path d="M12 19V5M5 12l7-7 7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+	</svg>
+</button>
+
+<div class="cookie-consent" role="dialog" aria-live="polite" aria-label="<?php esc_attr_e( 'Aviso de cookies', 'mage' ); ?>" hidden>
+	<p class="cookie-consent__text">
+		<?php esc_html_e( 'Usamos cookies para melhorar sua experiência e analisar o tráfego do site. Ao continuar navegando, você concorda com a nossa', 'mage' ); ?>
+		<a href="<?php echo esc_url( home_url( '/politica-de-privacidade/' ) ); ?>"><?php esc_html_e( 'Política de Privacidade', 'mage' ); ?></a>.
+	</p>
+	<div class="cookie-consent__actions">
+		<button type="button" class="btn cookie-consent__accept"><?php esc_html_e( 'Aceitar', 'mage' ); ?></button>
+		<button type="button" class="cookie-consent__decline"><?php esc_html_e( 'Recusar', 'mage' ); ?></button>
+	</div>
+</div>
 
 <?php wp_footer(); ?>
 </body>
