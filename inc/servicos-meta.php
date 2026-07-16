@@ -65,6 +65,7 @@ if ( ! function_exists( 'mage_servico_lp_box' ) ) {
 		mage_lp_field( $id, 'lp_telefone', __( 'Telefone', 'mage' ), 'text', '(48) 9 9999-9999' );
 		mage_lp_field( $id, 'lp_headline', __( 'Headline (título principal)', 'mage' ), 'text', get_the_title( $id ) );
 		mage_lp_field( $id, 'lp_subtitle', __( 'Subtítulo', 'mage' ), 'textarea' );
+		mage_lp_field( $id, 'lp_form_titulo', __( 'Título do formulário (Hero)', 'mage' ), 'text', __( 'Solicite seu orçamento', 'mage' ) );
 
 		echo '<h3>' . esc_html__( 'Serviço (vídeo / descrição)', 'mage' ) . '</h3>';
 		mage_lp_field( $id, 'lp_servico_titulo', __( 'Título da seção', 'mage' ), 'text', __( 'Título sobre o serviço', 'mage' ) );
@@ -86,7 +87,8 @@ if ( ! function_exists( 'mage_servico_lp_box' ) ) {
 		echo '<p class="description">' . esc_html__( 'Preencha apenas os que quiser exibir.', 'mage' ) . '</p>';
 
 		echo '<h3>' . esc_html__( 'Depoimentos', 'mage' ) . '</h3>';
-		mage_lp_field( $id, 'lp_depoimentos_mostrar', '', 'checkbox', __( 'Exibir o carrossel de depoimentos nesta página', 'mage' ) );
+		$dep_val = get_post_meta( $id, 'lp_depoimentos_mostrar', true );
+		echo '<p style="margin:0 0 14px;"><label style="font-weight:600;"><input type="checkbox" name="lp_depoimentos_mostrar" value="1" ' . checked( '0' !== $dep_val, true, false ) . '> ' . esc_html__( 'Exibir o carrossel de depoimentos nesta página', 'mage' ) . '</label></p>';
 		mage_lp_field( $id, 'lp_depoimentos_titulo', __( 'Título da seção', 'mage' ), 'text', __( 'Quem conhece, recomenda.', 'mage' ) );
 		echo '<p class="description">' . esc_html__( 'Os depoimentos são cadastrados no menu “Depoimentos”.', 'mage' ) . '</p>';
 
@@ -131,7 +133,7 @@ add_action( 'save_post_servicos', function ( $post_id ) {
 		return;
 	}
 
-	$text_keys = array( 'lp_telefone', 'lp_headline', 'lp_servico_titulo', 'lp_beneficios_titulo', 'lp_depoimentos_titulo', 'lp_faq_titulo', 'lp_final_titulo', 'lp_cta_label' );
+	$text_keys = array( 'lp_telefone', 'lp_headline', 'lp_form_titulo', 'lp_servico_titulo', 'lp_beneficios_titulo', 'lp_depoimentos_titulo', 'lp_faq_titulo', 'lp_final_titulo', 'lp_cta_label' );
 	$area_keys = array( 'lp_subtitle', 'lp_final_texto' );
 	for ( $i = 1; $i <= 6; $i++ ) {
 		$text_keys[] = "lp_beneficio_{$i}_titulo";
@@ -148,5 +150,5 @@ add_action( 'save_post_servicos', function ( $post_id ) {
 	}
 	update_post_meta( $post_id, 'lp_video_url', isset( $_POST['lp_video_url'] ) ? esc_url_raw( wp_unslash( $_POST['lp_video_url'] ) ) : '' );
 	update_post_meta( $post_id, 'lp_sobre_id', isset( $_POST['lp_sobre_id'] ) ? absint( $_POST['lp_sobre_id'] ) : 0 );
-	update_post_meta( $post_id, 'lp_depoimentos_mostrar', isset( $_POST['lp_depoimentos_mostrar'] ) ? '1' : '' );
+	update_post_meta( $post_id, 'lp_depoimentos_mostrar', isset( $_POST['lp_depoimentos_mostrar'] ) ? '1' : '0' );
 } );
