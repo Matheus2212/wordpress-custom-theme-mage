@@ -89,10 +89,17 @@
 			<p class="section-subtitle"><?php esc_html_e( 'Conheça alguns dos projetos que desenvolvemos com dedicação e excelência.', 'mage' ); ?></p>
 			<div class="grid-3">
 				<?php while ( $projetos->have_posts() ) : $projetos->the_post(); ?>
-					<article class="card card-dark">
-						<?php if ( has_post_thumbnail() ) : ?>
-							<div class="card-thumbnail"><?php the_post_thumbnail( 'mage-card' ); ?></div>
-						<?php endif; ?>
+					<article <?php post_class( 'card card-dark projeto-card' ); ?>>
+						<a href="<?php the_permalink(); ?>" class="projeto-card__tile" style="background:<?php echo esc_attr( mage_projeto_background( get_the_ID(), 'var(--color-primary)' ) ); ?>;">
+							<?php
+							$mage_icon = mage_projeto_icon( get_the_ID(), array( 128, 128 ) );
+							if ( $mage_icon ) {
+								echo $mage_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped -- wp_get_attachment_image output is safe.
+							} elseif ( has_post_thumbnail() ) {
+								the_post_thumbnail( 'mage-card', array( 'class' => 'projeto-card__cover' ) );
+							}
+							?>
+						</a>
 						<div class="card-body">
 							<h3 class="card-title"><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></h3>
 							<p class="card-excerpt"><?php echo esc_html( get_the_excerpt() ); ?></p>
