@@ -50,8 +50,10 @@
 			<div>
 				<p class="footer-heading"><?php esc_html_e( 'Contato', 'mage' ); ?></p>
 				<ul class="footer-links">
-					<li><?php esc_html_e( 'contato@magesystems.com.br', 'mage' ); ?></li>
-					<li><?php esc_html_e( 'Brasil', 'mage' ); ?></li>
+					<li><a href="mailto:contato@magesystems.com.br">contato@magesystems.com.br</a></li>
+					<li><?php esc_html_e( 'Rua Venezuela, 74 – Bairro das Nações', 'mage' ); ?></li>
+					<li><?php esc_html_e( 'Concórdia – SC · CEP 89.708-130', 'mage' ); ?></li>
+					<li><?php esc_html_e( 'CNPJ 39.944.754/0001-35', 'mage' ); ?></li>
 				</ul>
 				<?php if ( is_active_sidebar( 'footer-1' ) ) : ?>
 					<?php dynamic_sidebar( 'footer-1' ); ?>
@@ -63,14 +65,19 @@
 
 	<div class="footer-bottom">
 		<div class="container" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;width:100%">
-			<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?>. <?php esc_html_e( 'Todos os direitos reservados.', 'mage' ); ?></p>
+			<p>&copy; <?php echo esc_html( gmdate( 'Y' ) ); ?> <?php bloginfo( 'name' ); ?> — Matheus Felipe Marques · <?php esc_html_e( 'CNPJ 39.944.754/0001-35', 'mage' ); ?>. <?php esc_html_e( 'Todos os direitos reservados.', 'mage' ); ?></p>
 			<?php
 			wp_nav_menu( array(
 				'theme_location' => 'menu-footer',
 				'container'      => false,
 				'depth'          => 1,
-				'fallback_cb'    => false,
 				'items_wrap'     => '<ul class="footer-links" style="display:flex;gap:20px;flex-wrap:wrap;">%3$s</ul>',
+				'fallback_cb'    => function () {
+					echo '<ul class="footer-links" style="display:flex;gap:20px;flex-wrap:wrap;">'
+						. '<li><a href="' . esc_url( home_url( '/politica-de-privacidade/' ) ) . '">' . esc_html__( 'Política de Privacidade', 'mage' ) . '</a></li>'
+						. '<li><a href="' . esc_url( home_url( '/termos-de-uso/' ) ) . '">' . esc_html__( 'Termos de Uso', 'mage' ) . '</a></li>'
+						. '</ul>';
+				},
 			) );
 			?>
 		</div>
