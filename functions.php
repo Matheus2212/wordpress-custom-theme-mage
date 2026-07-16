@@ -1,5 +1,5 @@
 <?php
-defined( '_S_VERSION' ) || define( '_S_VERSION', '2.3.0' );
+defined( '_S_VERSION' ) || define( '_S_VERSION', '2.3.1' );
 
 // ── Theme Setup ──────────────────────────────────────────────────────────────
 function mage_setup() {
@@ -290,14 +290,6 @@ function mage_widgets_init() {
 		'after_widget'  => '</div>',
 		'before_title'  => '<h3 class="widget-title">',
 		'after_title'   => '</h3>',
-	) );
-	register_sidebar( array(
-		'name'          => __( 'Rodapé – Coluna 1', 'mage' ),
-		'id'            => 'footer-1',
-		'before_widget' => '<div class="widget %2$s">',
-		'after_widget'  => '</div>',
-		'before_title'  => '<h4 class="widget-title">',
-		'after_title'   => '</h4>',
 	) );
 }
 add_action( 'widgets_init', 'mage_widgets_init' );

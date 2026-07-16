@@ -55,9 +55,6 @@
 					<li><?php esc_html_e( 'Concórdia – SC · CEP 89.708-130', 'mage' ); ?></li>
 					<li><?php esc_html_e( 'CNPJ 39.944.754/0001-35', 'mage' ); ?></li>
 				</ul>
-				<?php if ( is_active_sidebar( 'footer-1' ) ) : ?>
-					<?php dynamic_sidebar( 'footer-1' ); ?>
-				<?php endif; ?>
 			</div>
 
 		</div>
@@ -96,7 +93,7 @@
 		<a href="<?php echo esc_url( home_url( '/politica-de-privacidade/' ) ); ?>"><?php esc_html_e( 'Política de Privacidade', 'mage' ); ?></a>.
 	</p>
 	<div class="cookie-consent__actions">
-		<button type="button" class="btn btn-primary cookie-consent__accept"><?php esc_html_e( 'Aceitar', 'mage' ); ?></button>
+		<button type="button" class="btn cookie-consent__accept"><?php esc_html_e( 'Aceitar', 'mage' ); ?></button>
 		<button type="button" class="cookie-consent__decline"><?php esc_html_e( 'Recusar', 'mage' ); ?></button>
 	</div>
 </div>
