@@ -12,6 +12,10 @@ get_header();
 
 $lead_status = isset( $_GET['lead'] ) ? sanitize_key( wp_unslash( $_GET['lead'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
+// WhatsApp: troque pelo número real. Formato internacional só com dígitos (55 + DDD + número).
+$mage_whatsapp_num  = '5549999999999';
+$mage_whatsapp_show = '(49) 9 9999-9999';
+
 while ( have_posts() ) :
 	the_post();
 	?>
@@ -42,6 +46,15 @@ while ( have_posts() ) :
 							<span class="contato-list__body">
 								<strong><?php esc_html_e( 'E-mail', 'mage' ); ?></strong>
 								<a href="mailto:contato@magesystems.com.br">contato@magesystems.com.br</a>
+							</span>
+						</li>
+						<li>
+							<span class="contato-list__icon" aria-hidden="true">
+								<svg viewBox="0 0 24 24" fill="none"><path d="M20 12a8 8 0 0 1-11.9 6.96L4 20l1.1-4A8 8 0 1 1 20 12Z" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 9.5c0 3 2.5 5.5 5.5 5.5.6 0 1-.5 1-1 0-.3-.2-.6-.5-.7l-1.3-.5-.9.9c-1-.4-1.8-1.2-2.2-2.2l.9-.9-.5-1.3c-.1-.3-.4-.5-.7-.5-.5 0-1 .4-1 1Z" fill="currentColor"/></svg>
+							</span>
+							<span class="contato-list__body">
+								<strong><?php esc_html_e( 'WhatsApp', 'mage' ); ?></strong>
+								<a href="https://wa.me/<?php echo esc_attr( $mage_whatsapp_num ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $mage_whatsapp_show ); ?></a>
 							</span>
 						</li>
 						<li>
@@ -86,6 +99,16 @@ while ( have_posts() ) :
 
 			</div>
 		</div>
+	</section>
+
+	<section class="contato-map-wrap" aria-label="<?php esc_attr_e( 'Nossa localização', 'mage' ); ?>">
+		<iframe
+			class="contato-map"
+			title="<?php esc_attr_e( 'Mapa da localização da Mage Systems', 'mage' ); ?>"
+			src="https://www.google.com/maps?q=<?php echo rawurlencode( 'Rua Venezuela, 74, Concórdia - SC, 89708-130' ); ?>&output=embed"
+			loading="lazy"
+			referrerpolicy="no-referrer-when-downgrade"
+			allowfullscreen></iframe>
 	</section>
 
 	<?php
