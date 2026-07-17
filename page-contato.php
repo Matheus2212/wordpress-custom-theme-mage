@@ -81,16 +81,14 @@ while ( have_posts() ) :
 							</li>
 						<?php endif; ?>
 
-						<?php if ( $mage_ig || $mage_li ) : ?>
+						<?php $mage_socials = mage_social_links(); if ( $mage_socials ) : ?>
 							<li>
 								<span class="contato-list__icon" aria-hidden="true">
 									<svg viewBox="0 0 24 24" fill="none"><rect x="4" y="4" width="16" height="16" rx="4" stroke="currentColor" stroke-width="1.8"/><circle cx="12" cy="12" r="3.5" stroke="currentColor" stroke-width="1.8"/><circle cx="17" cy="7" r="1" fill="currentColor"/></svg>
 								</span>
 								<span class="contato-list__body">
 									<strong><?php esc_html_e( 'Redes sociais', 'mage' ); ?></strong>
-									<?php if ( $mage_ig ) : ?><a href="<?php echo esc_url( $mage_ig ); ?>" target="_blank" rel="noopener noreferrer">Instagram</a><?php endif; ?>
-									<?php echo ( $mage_ig && $mage_li ) ? ' · ' : ''; ?>
-									<?php if ( $mage_li ) : ?><a href="<?php echo esc_url( $mage_li ); ?>" target="_blank" rel="noopener noreferrer">LinkedIn</a><?php endif; ?>
+									<span class="contato-socials"><?php $mage_i = 0; foreach ( $mage_socials as $mage_s ) : echo $mage_i++ ? ' · ' : ''; ?><a href="<?php echo esc_url( $mage_s['url'] ); ?>" target="_blank" rel="noopener noreferrer"><?php echo esc_html( $mage_s['label'] ); ?></a><?php endforeach; ?></span>
 								</span>
 							</li>
 						<?php endif; ?>
