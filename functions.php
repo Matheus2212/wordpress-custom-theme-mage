@@ -1,5 +1,5 @@
 <?php
-defined( '_S_VERSION' ) || define( '_S_VERSION', '2.3.3' );
+defined( '_S_VERSION' ) || define( '_S_VERSION', '2.4.0' );
 
 // ── Theme Setup ──────────────────────────────────────────────────────────────
 function mage_setup() {
@@ -304,6 +304,7 @@ add_action( 'after_switch_theme', 'mage_flush_rewrite' );
 require get_template_directory() . '/inc/template-tags.php';
 require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/customizer.php';
+require get_template_directory() . '/inc/settings.php';
 require get_template_directory() . '/inc/breadcrumbs.php';
 require get_template_directory() . '/inc/forms.php';
 require get_template_directory() . '/inc/testimonials.php';
