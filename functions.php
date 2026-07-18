@@ -1,5 +1,5 @@
 <?php
-defined( '_S_VERSION' ) || define( '_S_VERSION', '2.3.1' );
+defined( '_S_VERSION' ) || define( '_S_VERSION', '2.6.1' );
 
 // ── Theme Setup ──────────────────────────────────────────────────────────────
 function mage_setup() {
@@ -265,6 +265,80 @@ function mage_structured_data() {
 		if ( $post_tags ) {
 			$schema['keywords'] = implode( ', ', wp_list_pluck( $post_tags, 'name' ) );
 		}
+	} elseif ( is_singular( 'servicos' ) ) {
+		$desc    = wp_strip_all_tags( has_excerpt( $post ) ? get_the_excerpt( $post ) : wp_trim_words( get_the_content( null, false, $post ), 40 ) );
+		$service = array(
+			'@type'       => 'Service',
+			'@id'         => get_permalink( $post ) . '#service',
+			'name'        => get_the_title( $post ),
+			'serviceType' => get_the_title( $post ),
+			'description' => $desc,
+			'url'         => get_permalink( $post ),
+			'provider'    => array( '@type' => 'Organization', 'name' => $site_name, 'url' => $site_url, 'logo' => $logo_url ),
+			'areaServed'  => array( '@type' => 'Country', 'name' => 'Brasil' ),
+		);
+		if ( has_post_thumbnail( $post ) ) {
+			$service['image'] = get_the_post_thumbnail_url( $post, 'mage-hero' );
+		}
+		$graph = array( $service );
+		$faq   = mage_schema_faq_node( 'lp_faq_', 6 );
+		if ( $faq ) {
+			$graph[] = $faq;
+		}
+		$schema = array( '@context' => 'https://schema.org', '@graph' => $graph );
+
+	} elseif ( is_singular( 'projetos' ) ) {
+		$desc = wp_strip_all_tags( has_excerpt( $post ) ? get_the_excerpt( $post ) : wp_trim_words( get_the_content( null, false, $post ), 40 ) );
+
+		$offers = array();
+		for ( $i = 1; $i <= 3; $i++ ) {
+			$nome  = get_post_meta( $post->ID, "proj_plano_{$i}_nome", true );
+			$preco = mage_schema_parse_price( get_post_meta( $post->ID, "proj_plano_{$i}_preco", true ) );
+			if ( '' === trim( (string) $nome ) || '' === $preco ) {
+				continue;
+			}
+			$offers[] = array(
+				'@type'         => 'Offer',
+				'name'          => wp_strip_all_tags( $nome ),
+				'price'         => $preco,
+				'priceCurrency' => 'BRL',
+				'availability'  => 'https://schema.org/InStock',
+				'url'           => get_permalink( $post ),
+			);
+		}
+
+		if ( $offers ) {
+			$main = array(
+				'@type'       => 'Product',
+				'@id'         => get_permalink( $post ) . '#product',
+				'name'        => get_the_title( $post ),
+				'description' => $desc,
+				'url'         => get_permalink( $post ),
+				'brand'       => array( '@type' => 'Brand', 'name' => $site_name ),
+				'offers'      => $offers,
+			);
+		} else {
+			$main = array(
+				'@type'       => 'Service',
+				'@id'         => get_permalink( $post ) . '#service',
+				'name'        => get_the_title( $post ),
+				'serviceType' => get_the_title( $post ),
+				'description' => $desc,
+				'url'         => get_permalink( $post ),
+				'provider'    => array( '@type' => 'Organization', 'name' => $site_name, 'url' => $site_url, 'logo' => $logo_url ),
+				'areaServed'  => array( '@type' => 'Country', 'name' => 'Brasil' ),
+			);
+		}
+		if ( has_post_thumbnail( $post ) ) {
+			$main['image'] = get_the_post_thumbnail_url( $post, 'mage-hero' );
+		}
+		$graph = array( $main );
+		$faq   = mage_schema_faq_node( 'proj_faq_', 6 );
+		if ( $faq ) {
+			$graph[] = $faq;
+		}
+		$schema = array( '@context' => 'https://schema.org', '@graph' => $graph );
+
 	} else {
 		return;
 	}
@@ -304,11 +378,14 @@ add_action( 'after_switch_theme', 'mage_flush_rewrite' );
 require get_template_directory() . '/inc/template-tags.php';
 require get_template_directory() . '/inc/template-functions.php';
 require get_template_directory() . '/inc/customizer.php';
+require get_template_directory() . '/inc/settings.php';
+require get_template_directory() . '/inc/schema.php';
 require get_template_directory() . '/inc/breadcrumbs.php';
 require get_template_directory() . '/inc/forms.php';
 require get_template_directory() . '/inc/testimonials.php';
 require get_template_directory() . '/inc/about.php';
 require get_template_directory() . '/inc/servicos-meta.php';
 require get_template_directory() . '/inc/projetos-meta.php';
+require get_template_directory() . '/inc/projetos-lp.php';
 require get_template_directory() . '/inc/leads.php';
 require get_template_directory() . '/inc/updater.php';
