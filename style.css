@@ -4,7 +4,7 @@ Theme URI: https://magesystems.com.br/
 Author: Mage Systems
 Author URI: https://magesystems.com.br/
 Description: Tema personalizado da Mage Systems — rápido, bonito e com SEO otimizado.
-Version: 2.6.0
+Version: 2.6.1
 Tested up to: 6.5
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -494,6 +494,10 @@ button{cursor:pointer;font-family:var(--font-base)}
 /* ── Projeto — landing page (usa a cor do projeto via --proj) ───────────────── */
 .btn-cta{background:var(--proj,var(--color-primary));color:var(--color-white);border:2px solid var(--proj,var(--color-primary))}
 .btn-cta:hover{background:transparent;color:var(--proj,var(--color-primary))}
+.lp-store-badges{display:flex;gap:14px;flex-wrap:wrap}
+.lp-store{display:inline-flex;align-items:center;gap:10px;padding:12px 26px;border-radius:40px;background:var(--proj,var(--color-primary));color:var(--color-white);font-weight:700;font-size:1rem;border:2px solid rgba(255,255,255,.35);box-shadow:0 10px 26px rgba(0,0,0,.22);transition:all var(--transition)}
+.lp-store:hover{background:var(--color-white);color:var(--proj,var(--color-primary));border-color:var(--color-white)}
+.lp-store svg{width:20px;height:20px;flex-shrink:0}
 .lp-proj-hero{position:relative;overflow:hidden;background:var(--proj-bg);color:var(--color-white);padding:calc(var(--header-h) + 40px) 0 64px}
 .lp-proj-hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.30);pointer-events:none}
 .lp-proj-hero .container{position:relative;z-index:1}

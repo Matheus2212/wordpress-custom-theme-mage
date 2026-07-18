@@ -9,6 +9,38 @@
  * @package mage
  */
 
+if ( ! function_exists( 'mage_projeto_store_badges' ) ) {
+	/**
+	 * App-store buttons (Google Play / App Store) for a project, styled with
+	 * the project's colour. Returns '' when no store link is set.
+	 *
+	 * @param int|null $post_id Project ID.
+	 * @return string
+	 */
+	function mage_projeto_store_badges( $post_id = null ) {
+		$post_id = $post_id ? $post_id : get_the_ID();
+		$gp = get_post_meta( $post_id, 'proj_google_play', true );
+		$as = get_post_meta( $post_id, 'proj_app_store', true );
+		if ( ! $gp && ! $as ) {
+			return '';
+		}
+
+		$play_icon  = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M4.2 2.6a1 1 0 0 0-.7 1v16.8a1 1 0 0 0 1.5.87l14.4-8.4a1 1 0 0 0 0-1.74L5 2.73a1 1 0 0 0-.8-.13z"/></svg>';
+		$apple_icon = '<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.05 20.28c-.98.95-2.05.8-3.08.35-1.09-.46-2.09-.48-3.24 0-1.44.62-2.2.44-3.06-.35C2.79 15.25 3.51 7.59 9.05 7.31c1.35.07 2.29.74 3.08.8 1.18-.24 2.31-.93 3.57-.84 1.51.12 2.65.72 3.4 1.8-3.12 1.87-2.38 5.98.48 7.13-.57 1.5-1.31 2.99-2.54 4.09zM12.03 7.25c-.15-2.23 1.66-4.07 3.74-4.25.29 2.58-2.34 4.5-3.74 4.25z"/></svg>';
+
+		ob_start();
+		echo '<div class="lp-store-badges">';
+		if ( $gp ) {
+			echo '<a class="lp-store" href="' . esc_url( $gp ) . '" target="_blank" rel="noopener noreferrer">' . $play_icon . '<span>Google Play</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		if ( $as ) {
+			echo '<a class="lp-store" href="' . esc_url( $as ) . '" target="_blank" rel="noopener noreferrer">' . $apple_icon . '<span>App Store</span></a>'; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		}
+		echo '</div>';
+		return ob_get_clean();
+	}
+}
+
 if ( ! function_exists( 'mage_projeto_color' ) ) {
 	/**
 	 * Solid accent colour for a project (colour 1), for buttons/icons.
@@ -39,6 +71,11 @@ if ( ! function_exists( 'mage_projeto_lp_box' ) ) {
 		mage_lp_field( $id, 'proj_bullets', __( 'Tópicos / diferenciais (um por linha)', 'mage' ), 'textarea' );
 		mage_lp_field( $id, 'proj_cta_label', __( 'Texto dos botões (CTA)', 'mage' ), 'text', __( 'Quero contratar', 'mage' ) );
 		mage_lp_field( $id, 'proj_cta_url', __( 'Link do CTA (vazio = rola até o formulário)', 'mage' ), 'url', '' );
+
+		echo '<h3>' . esc_html__( 'Lojas de aplicativos', 'mage' ) . '</h3>';
+		mage_lp_field( $id, 'proj_google_play', __( 'Link da Google Play', 'mage' ), 'url', 'https://play.google.com/store/apps/details?id=...' );
+		mage_lp_field( $id, 'proj_app_store', __( 'Link da App Store', 'mage' ), 'url', 'https://apps.apple.com/app/...' );
+		echo '<p class="description">' . esc_html__( 'Se preenchidos, botões das lojas (com a cor do projeto) aparecem no topo no lugar do botão de CTA.', 'mage' ) . '</p>';
 
 		echo '<h3>' . esc_html__( 'Vídeo / apresentação', 'mage' ) . '</h3>';
 		mage_lp_field( $id, 'proj_conheca_titulo', __( 'Título da seção', 'mage' ), 'text', __( 'Conheça a solução', 'mage' ) );
@@ -112,7 +149,7 @@ add_action( 'save_post_projetos', function ( $post_id ) {
 
 	$text = array( 'proj_headline', 'proj_cta_label', 'proj_conheca_titulo', 'proj_beneficios_titulo', 'proj_planos_titulo', 'proj_garantia_dias', 'proj_garantia_texto', 'proj_depoimentos_titulo', 'proj_faq_titulo', 'proj_final_titulo' );
 	$area = array( 'proj_bullets', 'proj_final_texto' );
-	$url  = array( 'proj_cta_url', 'proj_video_url' );
+	$url  = array( 'proj_cta_url', 'proj_video_url', 'proj_google_play', 'proj_app_store' );
 
 	for ( $i = 1; $i <= 6; $i++ ) {
 		$text[] = "proj_beneficio_{$i}_titulo";

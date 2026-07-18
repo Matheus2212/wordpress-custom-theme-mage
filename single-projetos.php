@@ -60,7 +60,14 @@ while ( have_posts() ) :
 						<?php elseif ( has_excerpt() ) : ?>
 							<p><?php echo esc_html( get_the_excerpt() ); ?></p>
 						<?php endif; ?>
-						<a href="<?php echo esc_url( $cta_url ); ?>" class="btn btn-cta"><?php echo esc_html( $cta_label ); ?></a>
+						<?php
+						$store_badges = mage_projeto_store_badges( get_the_ID() );
+						if ( $store_badges ) {
+							echo $store_badges; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						} else {
+							echo '<a href="' . esc_url( $cta_url ) . '" class="btn btn-cta">' . esc_html( $cta_label ) . '</a>';
+						}
+						?>
 					</div>
 				</div>
 			</div>
@@ -235,6 +242,11 @@ while ( have_posts() ) :
 				<div class="lp-final__text">
 					<h2><?php echo esc_html( $m( 'proj_final_titulo', __( 'Ficou interessado?', 'mage' ) ) ); ?></h2>
 					<p><?php echo esc_html( $m( 'proj_final_texto', __( 'Fale com a gente e vamos tirar o seu projeto do papel.', 'mage' ) ) ); ?></p>
+					<?php
+					if ( $store_badges ) {
+						echo $store_badges; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					}
+					?>
 				</div>
 				<div class="lp-form-card lp-form-card--final">
 					<?php mage_lead_form( array( 'heading' => '', 'button' => $cta_label ) ); ?>

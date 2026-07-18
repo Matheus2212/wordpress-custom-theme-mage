@@ -1,5 +1,5 @@
 <?php
-defined( '_S_VERSION' ) || define( '_S_VERSION', '2.6.0' );
+defined( '_S_VERSION' ) || define( '_S_VERSION', '2.6.1' );
 
 // ── Theme Setup ──────────────────────────────────────────────────────────────
 function mage_setup() {
