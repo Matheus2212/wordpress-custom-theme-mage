@@ -22,6 +22,41 @@ add_filter( 'use_block_editor_for_post_type', function ( $use_block, $post_type 
 	return $use_block;
 }, 10, 2 );
 
+if ( ! function_exists( 'mage_update_excerpt' ) ) {
+	/**
+	 * Update a post's excerpt without triggering save_post recursion.
+	 *
+	 * @param int    $post_id Post ID.
+	 * @param string $excerpt New excerpt (already sanitized).
+	 */
+	function mage_update_excerpt( $post_id, $excerpt ) {
+		static $busy = false;
+		if ( $busy ) {
+			return;
+		}
+		if ( (string) $excerpt === (string) get_post_field( 'post_excerpt', $post_id ) ) {
+			return;
+		}
+		$busy = true;
+		wp_update_post( array( 'ID' => $post_id, 'post_excerpt' => $excerpt ) );
+		$busy = false;
+	}
+}
+
+if ( ! function_exists( 'mage_resumo_field' ) ) {
+	/**
+	 * Render a "Resumo" (post excerpt) textarea inside a meta box.
+	 *
+	 * @param int $post_id Post ID.
+	 */
+	function mage_resumo_field( $post_id ) {
+		$value = get_post_field( 'post_excerpt', $post_id );
+		echo '<h3>' . esc_html__( 'Resumo', 'mage' ) . '</h3>';
+		echo '<p style="margin:0 0 14px;"><label for="mage_resumo" style="display:block;font-weight:600;margin-bottom:4px;">' . esc_html__( 'Resumo (aparece na listagem, na busca e no compartilhamento)', 'mage' ) . '</label>';
+		echo '<textarea id="mage_resumo" name="mage_resumo" rows="2" class="widefat">' . esc_textarea( $value ) . '</textarea></p>';
+	}
+}
+
 if ( ! function_exists( 'mage_lp_field' ) ) {
 	/**
 	 * Render a single labelled meta field.
@@ -60,6 +95,8 @@ if ( ! function_exists( 'mage_servico_lp_box' ) ) {
 		$id = $post->ID;
 		echo '<style>.mage-lp-admin h3{margin:20px 0 10px;padding-top:14px;border-top:1px solid #e0e0e0;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:#646970}.mage-lp-admin h3:first-child{border-top:0;padding-top:0}.mage-lp-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}@media(max-width:782px){.mage-lp-cols{grid-template-columns:1fr}}</style>';
 		echo '<div class="mage-lp-admin">';
+
+		mage_resumo_field( $id );
 
 		echo '<h3>' . esc_html__( 'Topo (Hero)', 'mage' ) . '</h3>';
 		mage_lp_field( $id, 'lp_telefone', __( 'Telefone', 'mage' ), 'text', '(48) 9 9999-9999' );
@@ -151,4 +188,8 @@ add_action( 'save_post_servicos', function ( $post_id ) {
 	update_post_meta( $post_id, 'lp_video_url', isset( $_POST['lp_video_url'] ) ? esc_url_raw( wp_unslash( $_POST['lp_video_url'] ) ) : '' );
 	update_post_meta( $post_id, 'lp_sobre_id', isset( $_POST['lp_sobre_id'] ) ? absint( $_POST['lp_sobre_id'] ) : 0 );
 	update_post_meta( $post_id, 'lp_depoimentos_mostrar', isset( $_POST['lp_depoimentos_mostrar'] ) ? '1' : '0' );
+
+	if ( isset( $_POST['mage_resumo'] ) ) {
+		mage_update_excerpt( $post_id, sanitize_textarea_field( wp_unslash( $_POST['mage_resumo'] ) ) );
+	}
 } );
