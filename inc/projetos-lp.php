@@ -66,6 +66,10 @@ if ( ! function_exists( 'mage_projeto_lp_box' ) ) {
 		$id = $post->ID;
 		echo '<div class="mage-lp-admin"><style>.mage-lp-admin h3{margin:20px 0 10px;padding-top:14px;border-top:1px solid #e0e0e0;font-size:12px;text-transform:uppercase;letter-spacing:.6px;color:#646970}.mage-lp-admin h3:first-child{border-top:0;padding-top:0}.mage-lp-cols{display:grid;grid-template-columns:1fr 1fr;gap:0 24px}@media(max-width:782px){.mage-lp-cols{grid-template-columns:1fr}}</style>';
 
+		if ( function_exists( 'mage_resumo_field' ) ) {
+			mage_resumo_field( $id );
+		}
+
 		echo '<h3>' . esc_html__( 'Topo (Hero)', 'mage' ) . '</h3>';
 		mage_lp_field( $id, 'proj_headline', __( 'Headline', 'mage' ), 'text', get_the_title( $id ) );
 		mage_lp_field( $id, 'proj_bullets', __( 'Tópicos / diferenciais (um por linha)', 'mage' ), 'textarea' );
@@ -173,4 +177,8 @@ add_action( 'save_post_projetos', function ( $post_id ) {
 		update_post_meta( $post_id, $k, isset( $_POST[ $k ] ) ? esc_url_raw( wp_unslash( $_POST[ $k ] ) ) : '' );
 	}
 	update_post_meta( $post_id, 'proj_depoimentos_mostrar', isset( $_POST['proj_depoimentos_mostrar'] ) ? '1' : '0' );
+
+	if ( isset( $_POST['mage_resumo'] ) && function_exists( 'mage_update_excerpt' ) ) {
+		mage_update_excerpt( $post_id, sanitize_textarea_field( wp_unslash( $_POST['mage_resumo'] ) ) );
+	}
 } );

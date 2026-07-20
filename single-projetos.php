@@ -40,11 +40,12 @@ while ( have_posts() ) :
 				<div class="lp-proj-hero__grid">
 					<div class="lp-proj-hero__media">
 						<?php
-						if ( has_post_thumbnail() ) {
-							the_post_thumbnail( 'mage-hero' );
-						} else {
-							$mage_icon = mage_projeto_icon( get_the_ID(), array( 240, 240 ) );
+						// Prefer the project icon in the hero, even when a featured image is set.
+						$mage_icon = mage_projeto_icon( get_the_ID(), array( 240, 240 ) );
+						if ( $mage_icon ) {
 							echo $mage_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+						} elseif ( has_post_thumbnail() ) {
+							the_post_thumbnail( 'mage-hero' );
 						}
 						?>
 					</div>
