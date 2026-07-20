@@ -4,7 +4,7 @@ Theme URI: https://magesystems.com.br/
 Author: Mage Systems
 Author URI: https://magesystems.com.br/
 Description: Tema personalizado da Mage Systems — rápido, bonito e com SEO otimizado.
-Version: 2.6.2
+Version: 2.6.3
 Tested up to: 6.5
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -522,8 +522,8 @@ button{cursor:pointer;font-family:var(--font-base)}
 .lp-proj .lp-final .container{position:relative;z-index:1}
 
 /* Planos */
-.lp-planos__grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;margin-top:40px;align-items:stretch}
-.lp-plano{display:flex;flex-direction:column;background:var(--color-white);border:1px solid var(--color-gray-200);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)}
+.lp-planos__grid{display:flex;flex-wrap:wrap;justify-content:center;gap:24px;margin-top:40px}
+.lp-plano{flex:1 1 300px;max-width:360px;display:flex;flex-direction:column;background:var(--color-white);border:1px solid var(--color-gray-200);border-radius:var(--radius-lg);overflow:hidden;box-shadow:var(--shadow)}
 .lp-plano__head{background:var(--proj);color:var(--color-white);padding:24px;text-align:center}
 .lp-plano__nome{margin:0;font-weight:700;font-size:1.1rem;color:var(--color-white)}
 .lp-plano__preco{margin:8px 0 0;font-size:1.9rem;font-weight:800;color:var(--color-white)}
@@ -545,7 +545,7 @@ button{cursor:pointer;font-family:var(--font-base)}
   .grid-4{grid-template-columns:repeat(2,1fr)}
   .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
   .contato-grid{grid-template-columns:1fr;gap:40px}
-  .lp-planos__grid{grid-template-columns:1fr}
+  .lp-plano{flex-basis:100%;max-width:420px}
   .blog-wrap,.blog-wrap.has-sidebar{grid-template-columns:1fr;gap:40px}
   .widget-area{position:static;flex-direction:row;flex-wrap:wrap}
   .widget-area .widget{flex:1 1 240px}
