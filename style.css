@@ -4,7 +4,7 @@ Theme URI: https://magesystems.com.br/
 Author: Mage Systems
 Author URI: https://magesystems.com.br/
 Description: Tema personalizado da Mage Systems — rápido, bonito e com SEO otimizado.
-Version: 2.6.4
+Version: 2.7.0
 Tested up to: 6.5
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -460,6 +460,25 @@ button{cursor:pointer;font-family:var(--font-base)}
 .projeto-hero__icon{margin-bottom:18px}
 .projeto-hero__icon .projeto-icone{width:72px;height:72px;object-fit:contain;filter:drop-shadow(0 6px 18px rgba(0,0,0,.3))}
 
+/* ── Projetos: listagem em mosaico (estilo Pinterest) ───────────────────────── */
+.projetos-mosaico{display:grid;grid-template-columns:repeat(3,1fr);gap:32px;padding:56px 0 24px;align-items:start}
+.mos-card{position:relative;display:flex;flex-direction:column;border-radius:var(--radius-lg);overflow:hidden;border:1px solid var(--color-gray-200);background:var(--color-white);box-shadow:var(--shadow);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.mos-card:nth-child(2n){margin-top:44px}
+.mos-card:hover{transform:translateY(-6px);border-color:var(--proj);box-shadow:0 22px 44px rgba(0,0,0,.16)}
+.mos-card:hover{box-shadow:0 22px 44px color-mix(in srgb, var(--proj-c1) 34%, transparent)}
+.mos-card__media{display:block;aspect-ratio:16/11;overflow:hidden;background:var(--color-gray-200)}
+.mos-card__media img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.mos-card:hover .mos-card__media img{transform:scale(1.06)}
+.mos-card__fallback{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(135deg,var(--proj-c1),var(--proj-c2))}
+.mos-card__fallback .projeto-icone{max-width:45%;max-height:55%;object-fit:contain;filter:drop-shadow(0 6px 16px rgba(0,0,0,.25))}
+.mos-card__body{padding:22px;display:flex;flex-direction:column;gap:10px;flex:1;background:var(--color-white);background:linear-gradient(180deg, color-mix(in srgb, var(--proj-c1) 18%, #fff) 0%, #fff 82%)}
+.mos-card__title{font-size:1.15rem;margin:0;line-height:1.3}
+.mos-card__title a{color:var(--color-secondary)}
+.mos-card__title a:hover{color:var(--proj)}
+.mos-card__excerpt{font-size:.9rem;color:var(--color-gray-600);margin:0;flex:1}
+.mos-card__btn{align-self:flex-start;margin-top:6px;background:var(--proj);color:var(--color-white);border:2px solid var(--proj)}
+.mos-card__btn:hover{background:transparent;color:var(--proj)}
+
 /* ── Back to top ────────────────────────────────────────────────────────────── */
 .back-to-top{position:fixed;right:20px;bottom:20px;z-index:1200;width:44px;height:44px;border-radius:50%;display:flex;align-items:center;justify-content:center;color:var(--color-primary);cursor:pointer;background:linear-gradient(135deg,rgba(245,240,255,.38),rgba(214,196,246,.20));border:1px solid rgba(255,255,255,.55);box-shadow:0 8px 30px rgba(94,40,160,.16),inset 0 1px 0 rgba(255,255,255,.7);-webkit-backdrop-filter:blur(20px) saturate(180%);backdrop-filter:blur(20px) saturate(180%);opacity:0;visibility:hidden;transform:translateY(10px) scale(.9);transition:opacity .25s ease,transform .25s ease,visibility .25s,background .2s,color .2s}
 .back-to-top[hidden]{display:none}
@@ -543,6 +562,7 @@ button{cursor:pointer;font-family:var(--font-base)}
 /* ── Responsive ─────────────────────────────────────────────────────────────── */
 @media(max-width:1024px){
   .grid-4{grid-template-columns:repeat(2,1fr)}
+  .projetos-mosaico{grid-template-columns:repeat(2,1fr)}
   .footer-grid{grid-template-columns:1fr 1fr;gap:32px}
   .contato-grid{grid-template-columns:1fr;gap:40px}
   .lp-plano{flex-basis:100%;max-width:420px}
@@ -586,6 +606,10 @@ button{cursor:pointer;font-family:var(--font-base)}
   .cookie-consent{left:12px;right:12px;bottom:12px;max-width:none}
   .back-to-top{right:14px;bottom:14px}
   body.cookie-open .back-to-top{bottom:180px}
+}
+@media(max-width:600px){
+  .projetos-mosaico{grid-template-columns:1fr}
+  .mos-card:nth-child(2n){margin-top:0}
 }
 @media(max-width:480px){
   .posts-grid{grid-template-columns:1fr}
