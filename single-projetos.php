@@ -35,20 +35,25 @@ while ( have_posts() ) :
 	<article <?php post_class( 'lp lp-proj' ); ?> style="--proj:<?php echo esc_attr( $proj ); ?>;--proj-2:<?php echo esc_attr( $proj2 ); ?>;--proj-bg:<?php echo esc_attr( $proj_bg ); ?>;">
 
 		<?php /* ── Hero ─────────────────────────────────────────────────────── */ ?>
-		<header class="lp-proj-hero">
+		<?php
+		$mage_icon  = mage_projeto_icon( get_the_ID(), array( 240, 240 ) );
+		$hero_bg    = get_the_post_thumbnail_url( get_the_ID(), 'mage-hero' );
+		$hero_class = 'lp-proj-hero';
+		$hero_style = '';
+		if ( $hero_bg ) {
+			$hero_class .= ' has-bg-image';
+			$hero_style  = ' style="background-image:linear-gradient(180deg,rgba(0,0,0,.45),rgba(0,0,0,.68)),url(\'' . esc_url( $hero_bg ) . '\');"';
+		}
+		if ( ! $mage_icon ) {
+			$hero_class .= ' lp-proj-hero--no-media';
+		}
+		?>
+		<header class="<?php echo esc_attr( $hero_class ); ?>"<?php echo $hero_style; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>>
 			<div class="container">
 				<div class="lp-proj-hero__grid">
-					<div class="lp-proj-hero__media">
-						<?php
-						// Prefer the project icon in the hero, even when a featured image is set.
-						$mage_icon = mage_projeto_icon( get_the_ID(), array( 240, 240 ) );
-						if ( $mage_icon ) {
-							echo $mage_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-						} elseif ( has_post_thumbnail() ) {
-							the_post_thumbnail( 'mage-hero' );
-						}
-						?>
-					</div>
+					<?php if ( $mage_icon ) : ?>
+						<div class="lp-proj-hero__media"><?php echo $mage_icon; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></div>
+					<?php endif; ?>
 					<div class="lp-proj-hero__content">
 						<?php if ( function_exists( 'mage_breadcrumbs' ) ) { mage_breadcrumbs(); } ?>
 						<h1><?php echo esc_html( $m( 'proj_headline', get_the_title() ) ); ?></h1>

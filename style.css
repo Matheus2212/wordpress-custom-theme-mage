@@ -4,7 +4,7 @@ Theme URI: https://magesystems.com.br/
 Author: Mage Systems
 Author URI: https://magesystems.com.br/
 Description: Tema personalizado da Mage Systems — rápido, bonito e com SEO otimizado.
-Version: 2.7.0
+Version: 2.7.1
 Tested up to: 6.5
 Requires PHP: 7.4
 License: GNU General Public License v2 or later
@@ -519,8 +519,13 @@ button{cursor:pointer;font-family:var(--font-base)}
 .lp-store svg{width:20px;height:20px;flex-shrink:0}
 .lp-proj-hero{position:relative;overflow:hidden;background:var(--proj-bg);color:var(--color-white);padding:calc(var(--header-h) + 40px) 0 64px}
 .lp-proj-hero::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.30);pointer-events:none}
+.lp-proj-hero.has-bg-image{background-size:cover;background-position:center;background-repeat:no-repeat}
+.lp-proj-hero.has-bg-image::after{display:none}
 .lp-proj-hero .container{position:relative;z-index:1}
 .lp-proj-hero__grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;align-items:center}
+.lp-proj-hero--no-media .lp-proj-hero__grid{grid-template-columns:1fr;max-width:760px;margin-inline:auto;text-align:center}
+.lp-proj-hero--no-media .lp-proj-hero__bullets{width:fit-content;margin-inline:auto;text-align:left}
+.lp-proj-hero--no-media .lp-store-badges{justify-content:center}
 .lp-proj-hero__media{display:flex;justify-content:center}
 .lp-proj-hero__media img{border-radius:var(--radius-lg);box-shadow:0 20px 50px rgba(0,0,0,.35)}
 .lp-proj-hero__media .projeto-icone{width:auto;max-width:220px;max-height:220px;object-fit:contain;filter:drop-shadow(0 12px 30px rgba(0,0,0,.35))}
